@@ -1,0 +1,6 @@
+szymborski\bartosz\serwis\pgnig\view\TournamentTemplateView.class
+szymborski\bartosz\serwis\pgnig\view\TemplateView.class
+szymborski\bartosz\serwis\pgnig\entity\TournamentTemplate.class
+szymborski\bartosz\serwis\pgnig\entity\TorunamentTemplateItem.class
+szymborski\bartosz\serwis\pgnig\entity\TournamentRule.class
+szymborski\bartosz\serwis\pgnig\view\ViewScope.class
