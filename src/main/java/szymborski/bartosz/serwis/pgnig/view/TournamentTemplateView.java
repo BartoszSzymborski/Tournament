@@ -5,15 +5,16 @@
  */
 package szymborski.bartosz.serwis.pgnig.view;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import javax.annotation.PostConstruct;
-import org.primefaces.context.PrimeFacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import szymborski.bartosz.serwis.pgnig.service.RuleService;
+import szymborski.bartosz.serwis.pgnig.entity.TournamentRule;
+import szymborski.bartosz.serwis.pgnig.service.TourmentRuleServiceImpl;
 
 /**
  *
@@ -25,67 +26,55 @@ public class TournamentTemplateView {
 
     public static final String NAME = "NAME";
 
-    private String name;
-    ListIterator<String> ruleIterator;
+    private TournamentRule currentRule;
+    private Object currentValue;
+    ListIterator<TournamentRule> ruleIterator;
     private boolean iteratorMove;
+    Map<String, Object> newValus = new HashMap<>();
 
     @Autowired
-    private RuleService rs;
+    private TourmentRuleServiceImpl trsi;
 
     @PostConstruct
     public void init() {
-        final Map<String, String> requestParameterMap = PrimeFacesContext.getCurrentInstance()
-                .getExternalContext()
-                .getRequestParameterMap();
-        name = requestParameterMap.get("name");
-        if (name == null) {
-            return;
-        }
-        // List<String> ruleList = rs;
-        iteratorMove = true;
-        //ruleIterator = ruleList.listIterator();
 
+        List<TournamentRule> ruleList = trsi.gerRules();
+        iteratorMove = true;
+        ruleIterator = ruleList.listIterator();
+        currentRule = ruleIterator.next();
     }
 
     public void prevRule() {
-        String rule = null;
         if (ruleIterator.hasPrevious()) {
-            rule = ruleIterator.previous();
+            currentValue = null;
+            currentRule = ruleIterator.previous();
             if (iteratorMove) {
                 iteratorMove = false;
-                prevRule();
-                return;
+                if (ruleIterator.hasPrevious()) {
+                    currentRule = ruleIterator.previous();
+                }
             }
-        }else{
-            while(ruleIterator.hasNext()){
-                rule = ruleIterator.next();
-            }
-            ruleIterator.previous();
+            currentValue = newValus.get(currentRule.getName());
+            System.out.println("currentValue::get " + currentValue);
         }
-       // rule = rs.
-       iteratorMove = false;
+
     }
-    
+
     public void nextRule() {
-        String rule = null;
+
         if (ruleIterator.hasNext()) {
-            rule = ruleIterator.next();
-            if (iteratorMove) {
-                iteratorMove = false;
-                nextRule();
-                return;
+            newValus.put(currentRule.getName(), currentValue);
+            System.out.println("currentValue::put " + currentValue);
+            currentValue = null;
+            currentRule = ruleIterator.next();
+            if (!iteratorMove) {
+                iteratorMove = true;
+                if (ruleIterator.hasNext()) {
+                    currentRule = ruleIterator.next();//przeskok
+                }
             }
-        }else{
-            while(ruleIterator.hasPrevious()){
-                rule = ruleIterator.previous();
-            }
-            ruleIterator.next();
         }
-       // rule = rs.
-       iteratorMove = true;
     }
-    
-    
 
     public boolean isIteratorMove() {
         return iteratorMove;
@@ -95,20 +84,28 @@ public class TournamentTemplateView {
         this.iteratorMove = iteratorMove;
     }
 
-    public String getName() {
-        return name;
+    public TournamentRule getCurrentRule() {
+        return currentRule;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCurrentRule(TournamentRule currentRule) {
+        this.currentRule = currentRule;
     }
 
-    public ListIterator<String> getRuleIterator() {
+    public ListIterator<TournamentRule> getRuleIterator() {
         return ruleIterator;
     }
 
-    public void setRuleIterator(ListIterator<String> ruleIterator) {
+    public void setRuleIterator(ListIterator<TournamentRule> ruleIterator) {
         this.ruleIterator = ruleIterator;
+    }
+
+    public Object getCurrentValue() {
+        return currentValue;
+    }
+
+    public void setCurrentValue(Object currentValue) {
+        this.currentValue = currentValue;
     }
 
 }

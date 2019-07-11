@@ -16,7 +16,12 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
-        <p:commandButton title="do template" action="#{templateView.openTemplateDialog(name)}"> 
-        </p:commandButton>
+        <h:form>
+            <p:column>
+                <p:commandButton title="do template" action="#{templateView.openTemplateDialog()}"> 
+                </p:commandButton>
+            </p:column>
+        </h:form>
+
     </h:body>
 </html>

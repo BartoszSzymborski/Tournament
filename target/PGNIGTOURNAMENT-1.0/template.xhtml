@@ -11,9 +11,22 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>TODO supply a title</title>
+        <title>Reguły</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
+        <h:form id="daForm">
+            <p:column>
+                <h:outputText id="txt" value="#{tournamentTemplateView.currentRule.name}"/>
+            </p:column><br/><br/>
+            <p:inputNumber immediate="true" id="valinp" value="#{tournamentTemplateView.currentValue}" rendered="#{tournamentTemplateView.currentRule.integralType}"/><br/>
+            <p:selectBooleanCheckbox immediate="true" id="valinp2"  value="#{tournamentTemplateView.currentValue}"  rendered="#{not tournamentTemplateView.currentRule.integralType}" /><br/>
+            <p:commandButton  id="prevRule" style="azimuth: far-left; float: left; " icon="ui-icon-circle-arrow-w" value="Poprzednia reguła"><br/>
+                <f:ajax event="click" listener="#{tournamentTemplateView.prevRule()}" render="txt valinp valinp2" execute="valinp valinp2" delay="500"/>
+            </p:commandButton>
+            <p:commandButton  id="nextRule" style="azimuth: far-right; float: right;" icon="ui-icon-circle-arrow-e" value="Następna reguła">
+                <f:ajax event="click" listener="#{tournamentTemplateView.nextRule()}" render="txt valinp valinp2" execute="valinp valinp2" delay="500"/>
+            </p:commandButton>
+        </h:form>
     </h:body>
 </html>

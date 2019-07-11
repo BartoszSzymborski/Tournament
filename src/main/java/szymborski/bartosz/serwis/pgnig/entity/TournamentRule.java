@@ -20,16 +20,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author bartosz.szymborski
  */
 @Entity
-@Table(name = "TournamentRule")
-@XmlRootElement
+@Table(name = "\"TournamentRule\"")
 @NamedQueries({
     @NamedQuery(name = "TournamentRule.findAll", query = "SELECT t FROM TournamentRule t"),
     @NamedQuery(name = "TournamentRule.findByName", query = "SELECT t FROM TournamentRule t WHERE t.name = :name"),
@@ -43,7 +40,7 @@ public class TournamentRule implements Serializable {
     private String name;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "integralType")
+    @Column(name = "\"integralType\"")
     private boolean integralType;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -89,7 +86,6 @@ public class TournamentRule implements Serializable {
         this.id = id;
     }
 
-    @XmlTransient
     public Collection<TorunamentTemplateItem> getTorunamentTemplateItemCollection() {
         return torunamentTemplateItemCollection;
     }

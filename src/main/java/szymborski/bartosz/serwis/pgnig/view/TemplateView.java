@@ -10,9 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.primefaces.PrimeFaces;
-import static org.primefaces.component.feedreader.FeedReader.PropertyKeys.value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import szymborski.bartosz.serwis.pgnig.entity.TournamentRule;
 
 /**
  *
@@ -24,12 +24,14 @@ public class TemplateView {
 
     Map<String, Object> options = new HashMap<>();
 
-    public void openTemplateDialog(String name) {
+    public void openTemplateDialog() {
         options.put("draggable", Boolean.TRUE);
         options.put("resizable", Boolean.TRUE);
         options.put("responsive", Boolean.TRUE);
-         Map<String, List<String>> params = new HashMap<>();
-         params.put(TournamentTemplateView.NAME, Arrays.asList(name));
-         PrimeFaces.current().dialog().openDynamic("template", options, params);
+        options.put("contentWidth","500px");
+        options.put("contentHeight","200px");
+        PrimeFaces.current().dialog().openDynamic("template", options, null);
     }
+    
+    
 }
