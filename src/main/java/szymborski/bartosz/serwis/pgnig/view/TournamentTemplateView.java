@@ -109,8 +109,10 @@ public class TournamentTemplateView {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void saveMyValues() {
+        if(templateName.equals("")){
+            return;
+        }
         TournamentTemplate temp = ttd.saveTemplate(templateName);
-        //  temp.setTorunamentTemplateItemCollection(torunamentTemplateItemCollection);
         List<TorunamentTemplateItem> items = new ArrayList<>();
         for (Map.Entry<String, Object> ent : newValus.entrySet()) {
             TorunamentTemplateItem item = new TorunamentTemplateItem();
@@ -196,5 +198,4 @@ public class TournamentTemplateView {
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
     }
-
 }

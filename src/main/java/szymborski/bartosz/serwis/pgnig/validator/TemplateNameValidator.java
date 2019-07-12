@@ -29,6 +29,8 @@ public class TemplateNameValidator implements Validator {
     
 
     private static final String TEMPLATE_NAME_EXIST = "template_name_exist";
+    private static final String TEMPLATE_NAME_STRING = "template_name_string";
+    
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object object) throws ValidatorException {
@@ -38,6 +40,8 @@ public class TemplateNameValidator implements Validator {
             if (object.equals(ttd.getTemplateName(templateName))) {
                 prop = ResourceBundle.getBundle("messages").getString(TEMPLATE_NAME_EXIST);
             }
+            if(templateName.equals(""))
+                 prop = ResourceBundle.getBundle("messages").getString(TEMPLATE_NAME_STRING);
             if(prop !=null){
                 throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, prop, prop));
             }

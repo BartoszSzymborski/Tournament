@@ -37,7 +37,7 @@ and open the template in the editor.
                     <h:outputLabel value="Podaj nazwę templata " />
                     <h:inputText id="templateName" value="#{tournamentTemplateView.templateName}" requiredMessage="must be uniqe">
                         <f:validator binding="#{templateNameValidator}" />
-                    </h:inputText>
+                    </h:inputText><br/><br/>
                     <p:message for="templateName" showDetail="true">
                         <p:autoUpdate/>
                     </p:message>

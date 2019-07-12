@@ -74,14 +74,7 @@
             <artifactId>hibernate-validator</artifactId>
             <version>5.4.1.Final</version>
         </dependency>
-        <dependency>
-            <groupId>net.sf.dozer</groupId>
-            <artifactId>dozer</artifactId>
-            <version>5.5.1</version>
-        </dependency>
-
     </dependencies>
-
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
@@ -154,5 +147,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
