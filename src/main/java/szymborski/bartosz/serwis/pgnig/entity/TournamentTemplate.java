@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
  * @author bartosz.szymborski
  */
 @Entity
-@Table(name = "TournamentTemplate")
+@Table(name = "\"TournamentTemplate\"")
 @NamedQueries({
     @NamedQuery(name = "TournamentTemplate.findAll", query = "SELECT t FROM TournamentTemplate t"),
     @NamedQuery(name = "TournamentTemplate.findByName", query = "SELECT t FROM TournamentTemplate t WHERE t.name = :name"),

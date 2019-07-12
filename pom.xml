@@ -74,11 +74,23 @@
             <artifactId>hibernate-validator</artifactId>
             <version>5.4.1.Final</version>
         </dependency>
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>5.5.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
+             <resource>
+                <directory>src/main/java/resources</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
             <resource>
                 <directory>src/main/java/szymborski/bartosz/serwis/pgnig/resources</directory>
                 <excludes>
@@ -86,7 +98,7 @@
                 </excludes>
                 <targetPath>szymborski/bartosz/serwis/pgnig/dao</targetPath>
             </resource>
-              <resource>
+            <resource>
                 <directory>src/main/java/szymborski/bartosz/serwis/pgnig/resources/META-INF</directory>
                 <includes>
                     <include>MANIFEST.MF</include>

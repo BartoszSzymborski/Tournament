@@ -10,6 +10,7 @@
     <context:annotation-config/>
     <context:component-scan base-package="szymborski.bartosz.serwis.pgnig.view"/>
     <context:component-scan base-package="szymborski.bartosz.serwis.pgnig.service"/>
+    <context:component-scan base-package="szymborski.bartosz.serwis.pgnig.validator"/>
   
     
     <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">

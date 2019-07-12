@@ -12,6 +12,10 @@
             classpath:szymborski/bartosz/serwis/pgnig/dao/dao-context.xml
         </param-value>
     </context-param>
+    <context-param>
+        <param-name>resourceBundle.location</param-name>
+        <param-value>messages</param-value>
+    </context-param>
      <welcome-file-list>
         <welcome-file>start.xhtml</welcome-file>
     </welcome-file-list>

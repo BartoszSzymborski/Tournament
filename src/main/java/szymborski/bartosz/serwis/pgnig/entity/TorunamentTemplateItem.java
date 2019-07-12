@@ -23,7 +23,7 @@ import javax.persistence.Table;
  * @author bartosz.szymborski
  */
 @Entity
-@Table(name = "TorunamentTemplateItem")
+@Table(name = "\"TorunamentTemplateItem\"")
 @NamedQueries({
     @NamedQuery(name = "TorunamentTemplateItem.findAll", query = "SELECT t FROM TorunamentTemplateItem t"),
     @NamedQuery(name = "TorunamentTemplateItem.findByIntegerValue", query = "SELECT t FROM TorunamentTemplateItem t WHERE t.integerValue = :integerValue"),
@@ -32,19 +32,19 @@ import javax.persistence.Table;
 public class TorunamentTemplateItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Column(name = "integerValue", nullable = true)
+    @Column(name = "\"integerValue\"", nullable = true)
     private Short integerValue;
-    @Column(name = "booleanValue", nullable = true)
+    @Column(name = "\"booleanValue\"", nullable = true)
     private Boolean booleanValue;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Long id;
-    @JoinColumn(name = "idTournamentRule", referencedColumnName = "id")
+    @JoinColumn(name = "\"idTournamentRule\"", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private TournamentRule idTournamentRule;
-    @JoinColumn(name = "idTournamentTemplate", referencedColumnName = "id")
+    @JoinColumn(name = "\"idTournamentTemplate\"", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private TournamentTemplate idTournamentTemplate;
 
