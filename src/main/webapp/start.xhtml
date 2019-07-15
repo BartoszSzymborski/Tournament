@@ -18,10 +18,11 @@ and open the template in the editor.
     <h:body>
         <h:form>
             <p:column>
-                <p:commandButton title="do template" action="#{templateView.openTemplateDialog()}"> 
+                <p:commandButton title="Stwórz nowy arkusz" action="#{templateView.openTemplateDialog()}"> 
+                </p:commandButton><br/><br/>
+                 <p:commandButton title="Lista stworzonych arkuszy" action="#{startViewList.openTemplateDialog()}"> 
                 </p:commandButton>
             </p:column>
         </h:form>
-
     </h:body>
 </html>

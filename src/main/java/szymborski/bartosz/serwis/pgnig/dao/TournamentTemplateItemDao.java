@@ -5,8 +5,6 @@
  */
 package szymborski.bartosz.serwis.pgnig.dao;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -33,10 +31,10 @@ public class TournamentTemplateItemDao {
         return item;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void deleteTournamentTemplateItem(TorunamentTemplateItem item) {
-        Session session = sessionFactory.getCurrentSession();
-        session.delete(item);
-    }
+//    @Transactional(propagation = Propagation.REQUIRES_NEW)
+//    public void deleteTournamentTemplateItem(TorunamentTemplateItem item) {
+//        Session session = sessionFactory.getCurrentSession();
+//        session.delete(item);
+//    }
 
 }

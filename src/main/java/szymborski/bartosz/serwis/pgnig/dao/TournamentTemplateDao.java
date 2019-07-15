@@ -5,6 +5,8 @@
  */
 package szymborski.bartosz.serwis.pgnig.dao;
 
+import java.util.List;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -41,5 +43,23 @@ public class TournamentTemplateDao {
         return (String) query.uniqueResult();
 
     }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public List<TournamentTemplate> getTournamentTemplateList() {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("SELECT t.name FROM TournamentTemplate t");
+        final List list = query.list();
+        list.forEach(Hibernate::initialize);
+        return list;
+    }
+    
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public TournamentTemplate getTournamentTemplateName(String templateName){
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("FROM TournamentTemplate t WHERE t.name = :name");
+        query.setParameter("name", templateName);
+        return (TournamentTemplate) query.uniqueResult();
+    }
+    
 
 }

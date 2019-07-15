@@ -6,9 +6,8 @@
 package szymborski.bartosz.serwis.pgnig.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.math.BigInteger;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -31,7 +29,9 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "TournamentRule.findAll", query = "SELECT t FROM TournamentRule t"),
     @NamedQuery(name = "TournamentRule.findByName", query = "SELECT t FROM TournamentRule t WHERE t.name = :name"),
     @NamedQuery(name = "TournamentRule.findByIntegralType", query = "SELECT t FROM TournamentRule t WHERE t.integralType = :integralType"),
-    @NamedQuery(name = "TournamentRule.findById", query = "SELECT t FROM TournamentRule t WHERE t.id = :id")})
+    @NamedQuery(name = "TournamentRule.findById", query = "SELECT t FROM TournamentRule t WHERE t.id = :id"),
+    @NamedQuery(name = "TournamentRule.findByDepenceOnCurrentRule", query = "SELECT t FROM TournamentRule t WHERE t.depenceOnCurrentRule = :depenceOnCurrentRule"),
+    @NamedQuery(name = "TournamentRule.findByPosition", query = "SELECT t FROM TournamentRule t WHERE t.position = :position")})
 public class TournamentRule implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,8 +47,11 @@ public class TournamentRule implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTournamentRule")
-    private Collection<TorunamentTemplateItem> torunamentTemplateItemCollection;
+    @Size(max = 256)
+    @Column(name = "\"depenceOnCurrentRule\"")
+    private String depenceOnCurrentRule;
+    @Column(name = "position")
+    private BigInteger position;
 
     public TournamentRule() {
     }
@@ -86,12 +89,20 @@ public class TournamentRule implements Serializable {
         this.id = id;
     }
 
-    public Collection<TorunamentTemplateItem> getTorunamentTemplateItemCollection() {
-        return torunamentTemplateItemCollection;
+    public String getDepenceOnCurrentRule() {
+        return depenceOnCurrentRule;
     }
 
-    public void setTorunamentTemplateItemCollection(Collection<TorunamentTemplateItem> torunamentTemplateItemCollection) {
-        this.torunamentTemplateItemCollection = torunamentTemplateItemCollection;
+    public void setDepenceOnCurrentRule(String depenceOnCurrentRule) {
+        this.depenceOnCurrentRule = depenceOnCurrentRule;
+    }
+
+    public BigInteger getPosition() {
+        return position;
+    }
+
+    public void setPosition(BigInteger position) {
+        this.position = position;
     }
 
     @Override

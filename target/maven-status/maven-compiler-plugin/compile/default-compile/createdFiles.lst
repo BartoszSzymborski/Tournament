@@ -2,11 +2,16 @@ szymborski\bartosz\serwis\pgnig\validator\TemplateNameValidator.class
 szymborski\bartosz\serwis\pgnig\view\TournamentTemplateView.class
 szymborski\bartosz\serwis\pgnig\dao\TournamentTemplateItemDao.class
 szymborski\bartosz\serwis\pgnig\dao\TournamentRuleDao.class
+szymborski\bartosz\serwis\pgnig\view\TemplateListView.class
 szymborski\bartosz\serwis\pgnig\service\TourmentRuleServiceImpl.class
 szymborski\bartosz\serwis\pgnig\dao\TournamentTemplateDao.class
 szymborski\bartosz\serwis\pgnig\service\TourmentRuleService.class
+szymborski\bartosz\serwis\pgnig\converter\TemplateListConverter.class
 szymborski\bartosz\serwis\pgnig\view\TemplateView.class
 szymborski\bartosz\serwis\pgnig\entity\TournamentTemplate.class
+szymborski\bartosz\serwis\pgnig\view\StartViewList.class
 szymborski\bartosz\serwis\pgnig\entity\TorunamentTemplateItem.class
 szymborski\bartosz\serwis\pgnig\entity\TournamentRule.class
 szymborski\bartosz\serwis\pgnig\view\ViewScope.class
+szymborski\bartosz\serwis\pgnig\service\TournamentTemplateService.class
+szymborski\bartosz\serwis\pgnig\service\TournamentTemplateServiceImpl.class

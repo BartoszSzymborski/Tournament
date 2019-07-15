@@ -37,8 +37,6 @@ import szymborski.bartosz.serwis.pgnig.service.TourmentRuleServiceImpl;
 @Scope("view")
 public class TournamentTemplateView {
 
-    public static final String NAME = "NAME";
-
     private TournamentRule currentRule;
     private Object currentValue;
     ListIterator<TournamentRule> ruleIterator;
@@ -80,7 +78,6 @@ public class TournamentTemplateView {
                 }
             }
             currentValue = newValus.get(currentRule.getName());
-            System.out.println("currentValue::get " + currentValue);
         }
         isLastStep = false;
 
@@ -88,12 +85,11 @@ public class TournamentTemplateView {
 
     public void nextRule() {
         boolean validate = validateInputValues();
-        if(validate){
+        if (validate) {
             return;
         }
         if (ruleIterator.hasNext()) {
             newValus.put(currentRule.getName(), currentValue);
-            System.out.println("currentValue::put " + currentValue);
             currentValue = null;
             currentRule = ruleIterator.next();
             if (!iteratorMove) {
@@ -102,6 +98,10 @@ public class TournamentTemplateView {
                     currentRule = ruleIterator.next();//przeskok
                 }
             }
+            Boolean isFazaGrupowa = (Boolean) newValus.get("FAZA_GRUPOWA");
+            if(isFazaGrupowa != null && !isFazaGrupowa){
+                
+            }
         } else {
             isLastStep = true;
         }
@@ -109,7 +109,7 @@ public class TournamentTemplateView {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void saveMyValues() {
-        if(templateName.equals("")){
+        if (templateName.equals("")) {
             return;
         }
         TournamentTemplate temp = ttd.saveTemplate(templateName);
@@ -131,12 +131,13 @@ public class TournamentTemplateView {
 
     }
 
-    public String getValidateFileId(){
+    public String getValidateFileId() {
         return "daForm:" + (currentRule.getIntegralType() ? "valinp" : "valinp2"); //identyfikacja czy bole wpisane gotowe do zapisu jest Integer czy Boolean
     }
 
     public static final String BAD_VALUE_TYPE = "bad_value_type";
-    //walidacja pola
+
+    //walidacja pola w formularzu
     public boolean validateInputValues() {
         if (currentValue == null) {
             String str = ResourceBundle.getBundle("messages").getString(BAD_VALUE_TYPE);
@@ -146,10 +147,10 @@ public class TournamentTemplateView {
         }
         return false;
     }
-    
-    public void closeDialog(){
-        PrimeFaces.current().dialog().closeDynamic(Boolean.TRUE);
-    }
+
+   public void closeDialog() {
+       PrimeFaces.current().dialog().closeDynamic(Boolean.TRUE);
+   }
 
     public boolean isIteratorMove() {
         return iteratorMove;

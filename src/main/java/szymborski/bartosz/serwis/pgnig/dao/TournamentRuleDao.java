@@ -31,7 +31,7 @@ public class TournamentRuleDao {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Collection<TournamentRule> getRules(){
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("FROM TournamentRule");
+        Query query = session.createQuery("FROM TournamentRule t ORDER BY t.position ASC");
         final List list = query.list();
         list.forEach(Hibernate::initialize);
         return list;

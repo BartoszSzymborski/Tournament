@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,7 +42,7 @@ public class TournamentTemplate implements Serializable {
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Long id;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTournamentTemplate")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTournamentTemplate", fetch = FetchType.EAGER)
     private Collection<TorunamentTemplateItem> torunamentTemplateItemCollection;
 
     public TournamentTemplate() {

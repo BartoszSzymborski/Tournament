@@ -25,8 +25,8 @@ public class TemplateView {
     Map<String, Object> options = new HashMap<>();
 
     public void openTemplateDialog() {
-        options.put("draggable", Boolean.TRUE);
-        options.put("resizable", Boolean.TRUE);
+        options.put("draggable", Boolean.FALSE);
+        options.put("resizable", Boolean.FALSE);
         options.put("responsive", Boolean.TRUE);
         options.put("contentWidth","500px");
         options.put("contentHeight","200px");
