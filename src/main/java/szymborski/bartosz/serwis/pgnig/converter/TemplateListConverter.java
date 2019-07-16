@@ -26,7 +26,7 @@ public class TemplateListConverter implements Converter{
     
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        return ttd.getTournamentTemplateName(value);
+        return ttd.getTournamentTemplateName(value); //konwerter - zmienia mu podany parametr na obiekt - potrzebny do wyświetlenia templatetow na widoku
     }
 
     @Override

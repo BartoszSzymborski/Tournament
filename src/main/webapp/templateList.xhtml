@@ -11,25 +11,26 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>Lista stworzonych templetów</title>
+        <title>Lista stworzonych arkuszy</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
         <h:form id="formList">
-            <p:outputLabel value="Wybierz swój arkusz  "/>
+            <p:outputLabel value="#{mess.choose_your_template}  "/>
             <p:selectOneMenu id="templateList" value="#{templateListView.choosenTemplate}" style="width: 125px;" converter="#{templateListConverter}">
-                <f:selectItem itemLabel="Wybierz" itemValue="" />
+                <f:selectItem itemLabel="#{mess.choose}" itemValue="" />
                 <f:selectItems value="#{templateListView.templates}" />
                 <f:ajax event="change" render="dataTable"/>
             </p:selectOneMenu><br/><br/>
-            <p:dataTable id="dataTable" value="#{templateListView.choosenTemplate.torunamentTemplateItemCollection}" var="templateItem">
-                <p:column headerText="Parametry">
+            <p:dataTable id="dataTable" value="#{templateListView.choosenTemplate.torunamentTemplateItemCollection}" var="templateItem"> <!-- value - encja, var- umożliwia poruszanie się po encjach, o ile są ze sobą powiązane  -->
+                <p:column headerText="#{mess.parameters}">
                     <h:outputText value="#{templateItem.idTournamentRule.name}"/>
                 </p:column>
-                <p:column headerText="Wartości" style="text-align: center">
-                    <h:outputText value="#{templateItem.idTournamentRule.integralType ? templateItem.integerValue : templateItem.booleanValue }" />
+                <p:column headerText="#{mess.values}" style="text-align: center">
+                    <h:outputText value="#{templateItem.idTournamentRule.integralType ? templateItem.integerValue : templateItem.booleanValue }" /> <!-- warunek sprawdzającyh jaki rodzaj wartości wyświetlić na widoku -->
                 </p:column>
-            </p:dataTable>
+            </p:dataTable><br/><br/>
+            <p:commandButton value="#{mess.exit}" action="#{templateListView.closeDialog()}" style="float: right"></p:commandButton>
         </h:form>
     </h:body>
 </html>

@@ -20,21 +20,21 @@ and open the template in the editor.
                 <p:column>
                     <h:outputText id="txt" value="#{tournamentTemplateView.currentRule.name}"/>
                 </p:column><br/><br/>
-                <p:inputNumber immediate="true" id="valinp" value="#{tournamentTemplateView.currentValue}" rendered="#{tournamentTemplateView.currentRule.integralType}"/><br/>
+                <p:inputNumber immediate="true" id="valinp" value="#{tournamentTemplateView.currentValue}" rendered="#{tournamentTemplateView.currentRule.integralType}" converter="javax.faces.Integer"/><br/>
                 <p:selectBooleanCheckbox immediate="true" id="valinp2"  value="#{tournamentTemplateView.currentValue}"  rendered="#{not tournamentTemplateView.currentRule.integralType}" /><br/>
                 <p:message showDetail="true" for="#{tournamentTemplateView.getValidateFileId()}" style="font-size: 0.75em">
                     <p:autoUpdate/>
                 </p:message>
-                <p:commandButton  id="prevRule" style="azimuth: far-left; float: left; " icon="ui-icon-circle-arrow-w" value="Poprzednia reguła"><br/>
-                    <f:ajax event="click" listener="#{tournamentTemplateView.prevRule()}" render="@form" execute="valinp valinp2" delay="500"/>
+                <p:commandButton  id="prevRule" style="azimuth: far-left; float: left; " icon="ui-icon-circle-arrow-w" value="#{mess.prev_value}"><br/>
+                    <f:ajax event="click" listener="#{tournamentTemplateView.prevRule()}" render="@form" execute="valinp valinp2" delay="250"/>
                 </p:commandButton>
-                <p:commandButton  id="nextRule" style="azimuth: far-right; float: right;" icon="ui-icon-circle-arrow-e" value="Następna reguła">
-                    <f:ajax event="click" listener="#{tournamentTemplateView.nextRule()}" render="@form" execute="valinp valinp2" delay="500"/>
+                <p:commandButton  id="nextRule" style="azimuth: far-right; float: right;" icon="ui-icon-circle-arrow-e" value="#{mess.next_value}">
+                    <f:ajax event="click" listener="#{tournamentTemplateView.nextRule()}" render="@form" execute="valinp valinp2" delay="250"/>
                 </p:commandButton>
             </p:panel>
             <p:panel rendered="#{tournamentTemplateView.isLastStep}" style="border: 0px">
                 <p:column>
-                    <h:outputLabel value="Podaj nazwę templata " />
+                    <h:outputLabel value="#{mess.give_template_name}" />
                     <h:inputText id="templateName" value="#{tournamentTemplateView.templateName}" requiredMessage="must be uniqe">
                         <f:validator binding="#{templateNameValidator}" />
                     </h:inputText><br/><br/>
@@ -42,7 +42,7 @@ and open the template in the editor.
                         <p:autoUpdate/>
                     </p:message>
                 </p:column>
-                <p:commandButton value="Zapisz " action="#{tournamentTemplateView.saveMyValues()}">
+                <p:commandButton value="#{mess.save}" action="#{tournamentTemplateView.saveMyValues()}">
                 </p:commandButton>
             </p:panel>
         </h:form>

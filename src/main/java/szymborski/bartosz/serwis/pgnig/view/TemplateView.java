@@ -5,14 +5,11 @@
  */
 package szymborski.bartosz.serwis.pgnig.view;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.primefaces.PrimeFaces;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import szymborski.bartosz.serwis.pgnig.entity.TournamentRule;
 
 /**
  *

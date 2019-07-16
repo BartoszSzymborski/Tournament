@@ -27,7 +27,7 @@ public class StartViewList {
         options.put("resizable", Boolean.FALSE);
         options.put("responsive", Boolean.TRUE);
         options.put("contentWidth", "900px");
-        options.put("contentHeight", "700px");
+        options.put("contentHeight", "500px");
         PrimeFaces.current().dialog().openDynamic("templateList", options, null);
     }
     

@@ -16,6 +16,11 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.script.Bindings;
+import javax.script.ScriptContext;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -67,7 +72,7 @@ public class TournamentTemplateView {
 
     }
 
-    public void prevRule() {
+    public void prevRule() throws ScriptException {
         if (ruleIterator.hasPrevious()) {
             currentValue = null;
             currentRule = ruleIterator.previous();
@@ -75,7 +80,11 @@ public class TournamentTemplateView {
                 iteratorMove = false;
                 if (ruleIterator.hasPrevious()) {
                     currentRule = ruleIterator.previous();
+
                 }
+            }
+            while (ruleIterator.hasPrevious() && !shouldBeShow(currentRule.getDepenceOnCurrentRule())) {
+                currentRule = ruleIterator.previous(); //pętla dla Groovy
             }
             currentValue = newValus.get(currentRule.getName());
         }
@@ -83,7 +92,7 @@ public class TournamentTemplateView {
 
     }
 
-    public void nextRule() {
+    public void nextRule() throws ScriptException {
         boolean validate = validateInputValues();
         if (validate) {
             return;
@@ -96,11 +105,15 @@ public class TournamentTemplateView {
                 iteratorMove = true;
                 if (ruleIterator.hasNext()) {
                     currentRule = ruleIterator.next();//przeskok
+
                 }
             }
-            Boolean isFazaGrupowa = (Boolean) newValus.get("FAZA_GRUPOWA");
-            if(isFazaGrupowa != null && !isFazaGrupowa){
-                
+            while (!shouldBeShow(currentRule.getDepenceOnCurrentRule())) {
+                if(!ruleIterator.hasNext()){
+                    isLastStep = true;
+                    break;//pętla dla groovy - ważna - break = w przypadku gdy już nasz pierwszy warunek liczba_drużyn  jest ustawiony mniej niż 3 - przechodzi od razu do zapisu templata
+                }
+                currentRule = ruleIterator.next();
             }
         } else {
             isLastStep = true;
@@ -121,7 +134,7 @@ public class TournamentTemplateView {
             if (ent.getValue() instanceof Boolean) {
                 item.setBooleanValue((Boolean) ent.getValue());
             } else {
-                item.setIntegerValue(Short.valueOf((String) ent.getValue()));
+                item.setIntegerValue(((Integer) ent.getValue()).shortValue());
             }
             items.add(item);
         }
@@ -148,9 +161,19 @@ public class TournamentTemplateView {
         return false;
     }
 
-   public void closeDialog() {
-       PrimeFaces.current().dialog().closeDynamic(Boolean.TRUE);
-   }
+    public boolean shouldBeShow(String expression) throws ScriptException { // metoda dla scryptu Goovy
+        ScriptEngineManager factory = new ScriptEngineManager();
+        ScriptEngine engine = factory.getEngineByName("groovy");
+        Bindings bindings = engine.createBindings(); //wywołanie
+        bindings.put("daMap", newValus); //druga wartość - twoja mapa z wartościami, pierwsza wartości do odczytu w skrypcie
+        engine.setBindings(bindings, ScriptContext.GLOBAL_SCOPE);
+        String scr = "def rvalue(String key){return daMap.get(key)} \n " + expression; //rvalue - wartość którą nadałem w bazie w kolumnie depenceOnCurrentRule - pracuje na String
+        return (Boolean) engine.eval(scr);
+    }
+
+    public void closeDialog() {
+        PrimeFaces.current().dialog().closeDynamic(Boolean.TRUE);
+    }
 
     public boolean isIteratorMove() {
         return iteratorMove;
