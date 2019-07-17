@@ -48,5 +48,10 @@ public class TournamentServiceImpl implements TournamentService{
         trsd.saveTournamentRules(map, tournament);
         return tournament;
     }
+
+    @Override
+    public Tournament getTournamentId(Long valueOf) {
+        return td.getTournamentId(valueOf);
+    }
     
 }

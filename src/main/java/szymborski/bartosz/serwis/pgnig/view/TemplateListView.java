@@ -6,16 +6,14 @@
 package szymborski.bartosz.serwis.pgnig.view;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import szymborski.bartosz.serwis.pgnig.entity.TournamentTemplate;
-import szymborski.bartosz.serwis.pgnig.service.TournamentTemplateServiceImpl;
+import szymborski.bartosz.serwis.pgnig.service.TournamentTemplateService;
 
 /**
  *
@@ -27,7 +25,7 @@ public class TemplateListView {
     
     
     @Autowired
-    private TournamentTemplateServiceImpl ttsi;
+    private TournamentTemplateService ttsi;
     
     List<TournamentTemplate> templates;
    TournamentTemplate choosenTemplate;
@@ -54,7 +52,5 @@ public class TemplateListView {
         this.choosenTemplate = choosenTemplate;
     }
 
-   
-    
     
 }

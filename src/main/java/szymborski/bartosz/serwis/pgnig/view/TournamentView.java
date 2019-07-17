@@ -5,6 +5,10 @@
  */
 package szymborski.bartosz.serwis.pgnig.view;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +34,8 @@ public class TournamentView {
     private Tournament tournament;
     private String name;
     private TournamentTemplate choosenTemplate;
+    private Long id;
+    public static final String TOURNAMENT_ID = "tournamentId";
 
     @PostConstruct
     public void init() {
@@ -39,11 +45,25 @@ public class TournamentView {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void saveTournament() {
         tournament = tsi.saveTournament(name, choosenTemplate.getName());
-        closeDialog();
+        nextDialog();
     }
 
     public void closeDialog() {
         PrimeFaces.current().dialog().closeDynamic(Boolean.TRUE);
+    }
+
+    public void nextDialog() {
+        Map<String, List<String>> params = new HashMap<>();
+        params.put(TOURNAMENT_ID, Arrays.asList(tournament.getId().toString()));
+        
+        Map<String, Object> options = new HashMap<>();
+        options.put("draggable", Boolean.FALSE);
+        options.put("resizable", Boolean.FALSE);
+        options.put("responsive", Boolean.TRUE);
+        options.put("contentWidth", "900px");
+        options.put("contentHeight", "400px");
+
+        PrimeFaces.current().dialog().openDynamic("teams", options, params);
     }
 
     public String getName() {
@@ -60,6 +80,10 @@ public class TournamentView {
 
     public void setChoosenTemplate(TournamentTemplate choosenTemplate) {
         this.choosenTemplate = choosenTemplate;
+    }
+
+    public Long getId() {
+        return id;
     }
 
 }

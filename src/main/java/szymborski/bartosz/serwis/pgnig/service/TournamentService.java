@@ -16,4 +16,6 @@ public interface TournamentService {
     
     Tournament saveTournament(String name, String templateName);
     
+    Tournament getTournamentId(Long valueOf);
+    
 }
