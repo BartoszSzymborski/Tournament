@@ -22,24 +22,22 @@ import szymborski.bartosz.serwis.pgnig.service.TournamentTemplateService;
 @Component
 @Scope("view")
 public class TemplateListView {
-    
-    
+
     @Autowired
     private TournamentTemplateService ttsi;
-    
+
     List<TournamentTemplate> templates;
-   TournamentTemplate choosenTemplate;
-    
+    TournamentTemplate choosenTemplate;
+
     @PostConstruct
     public void init() {
         templates = ttsi.getTemplates();
-        System.out.println(Arrays.deepToString(templates.toArray()));
     }
-    
+
     public void closeDialog() {
         PrimeFaces.current().dialog().closeDynamic(Boolean.TRUE);
     }
-    
+
     public List<TournamentTemplate> getTemplates() {
         return templates;
     }
@@ -52,5 +50,4 @@ public class TemplateListView {
         this.choosenTemplate = choosenTemplate;
     }
 
-    
 }

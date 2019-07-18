@@ -19,13 +19,14 @@ and open the template in the editor.
             <h:outputFormat id="format" value="#{mess.how_many_teams_is_available}" style="float: right">
                 <f:param value="#{contenderView.teamsToChooseLeft}" />
             </h:outputFormat>
-            <p:outputLabel value="#{mess.choose_teams} " />
+            <p:outputLabel value="#{mess.choose_teams}" />
             <p:selectManyCheckbox valueChangeListener="#{contenderView.teamClicked}" id="teamsList" value="#{contenderView.contendersChoosen}" style="width: 125px" converter="#{contenderConverter}" layout="grid" columns="3">
-                <f:selectItems value="#{contenderView.contenders}"/>
-                <f:ajax event="change"  render="format"/>
+                <f:selectItems value="#{contenderView.contenders}" var="it"  />
+                <f:ajax event="change"  render="format saveTeam @this"/>
             </p:selectManyCheckbox><br/><br/>
-            <p:panel >
-                <p:commandButton value="#{mess.save}"></p:commandButton>
+            <p:panel style="border: 0px" id="saveTeam" visible="#{contenderView.showSaveButton}" >
+                <p:commandButton value="#{mess.save}" action="#{contenderView.saveTournamentContender()}" >
+                </p:commandButton>
             </p:panel>
         </h:form>
     </h:body>

@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import szymborski.bartosz.serwis.pgnig.dao.ContenderDao;
 import szymborski.bartosz.serwis.pgnig.entity.Contender;
-import szymborski.bartosz.serwis.pgnig.entity.TournamentRuleSet;
 
 /**
  *

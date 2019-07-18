@@ -58,4 +58,13 @@ public class ContenderDao {
         return (TournamentRuleSet) obj;
     }
     
+    @SuppressWarnings("unchecked")
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Contender getContenderId(Long id){
+        Session session = sessionFactory.getCurrentSession();
+        Contender contender = session.load(Contender.class, id);
+        Hibernate.initialize(contender);
+        return contender;
+    }
+    
 }

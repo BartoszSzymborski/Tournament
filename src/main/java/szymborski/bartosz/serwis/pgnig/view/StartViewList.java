@@ -8,6 +8,7 @@ package szymborski.bartosz.serwis.pgnig.view;
 import java.util.HashMap;
 import java.util.Map;
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.SelectEvent;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -18,11 +19,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("view")
 public class StartViewList {
-    
-     Map<String, Object> options = new HashMap<>();
-    
-    
-    public void openTemplateDialog() {
+
+    Map<String, Object> options = new HashMap<>();
+
+    public void openTemplateListDialog() {
         options.put("draggable", Boolean.FALSE);
         options.put("resizable", Boolean.FALSE);
         options.put("responsive", Boolean.TRUE);
@@ -30,5 +30,27 @@ public class StartViewList {
         options.put("contentHeight", "500px");
         PrimeFaces.current().dialog().openDynamic("templateList", options, null);
     }
-    
+
+    public void openTemplateDialog() {
+        options.put("draggable", Boolean.FALSE);
+        options.put("resizable", Boolean.FALSE);
+        options.put("responsive", Boolean.TRUE);
+        options.put("contentWidth", "500px");
+        options.put("contentHeight", "200px");
+        PrimeFaces.current().dialog().openDynamic("template", options, null);
+    }
+
+    public void openTournamentDialog() {
+        options.put("draggable", Boolean.FALSE);
+        options.put("resizable", Boolean.FALSE);
+        options.put("responsive", Boolean.TRUE);
+        options.put("contentWidth", "900px");
+        options.put("contentHeight", "550px");
+        PrimeFaces.current().dialog().openDynamic("tournament", options, null);
+    }
+
+    public void onDialogReturn(SelectEvent event) {
+        PrimeFaces.current().dialog().closeDynamic(event.getObject());
+    }
+
 }

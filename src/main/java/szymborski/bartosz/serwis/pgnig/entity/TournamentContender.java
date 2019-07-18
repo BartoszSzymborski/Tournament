@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,7 +20,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -33,15 +34,16 @@ public class TournamentContender implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Long id;
     @JoinColumn(name = "\"idContender\"", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Contender idContender;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTournamentContender")
-    private Collection<TournamentEncounterContender> tournamentEncounterContenderCollection;
+    @JoinColumn(name = "\"idTournament\"")
+    @ManyToOne(optional = false)
+    private Tournament tournament;
 
     public TournamentContender() {
     }
@@ -66,14 +68,14 @@ public class TournamentContender implements Serializable {
         this.idContender = idContender;
     }
 
-    public Collection<TournamentEncounterContender> getTournamentEncounterContenderCollection() {
-        return tournamentEncounterContenderCollection;
+    public Tournament getTournament() {
+        return tournament;
     }
 
-    public void setTournamentEncounterContenderCollection(Collection<TournamentEncounterContender> tournamentEncounterContenderCollection) {
-        this.tournamentEncounterContenderCollection = tournamentEncounterContenderCollection;
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

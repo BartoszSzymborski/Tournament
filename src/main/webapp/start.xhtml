@@ -18,11 +18,12 @@ and open the template in the editor.
     <h:body>
         <h:form>
             <p:column>
-                <p:commandButton title="Stwórz nowy arkusz" action="#{templateView.openTemplateDialog()}"> 
+                <p:commandButton title="Stwórz nowy arkusz" action="#{startViewList.openTemplateDialog()}"> 
                 </p:commandButton><br/><br/>
-                 <p:commandButton title="Lista stworzonych arkuszy" action="#{startViewList.openTemplateDialog()}"> 
+                 <p:commandButton title="Lista stworzonych arkuszy" action="#{startViewList.openTemplateListDialog()}"> 
                 </p:commandButton><br/><br/>
-                <p:commandButton title="Tournament" action="#{tournamentViewDialog.openTemplateDialog()}">
+                <p:commandButton title="Tournament" action="#{startViewList.openTournamentDialog()}">
+                    <p:ajax event="dialogReturn" listener="#{startViewList.onDialogReturn}"/> <!-- na h:ajax to nie działa  -->
                 </p:commandButton>
             </p:column>
         </h:form>

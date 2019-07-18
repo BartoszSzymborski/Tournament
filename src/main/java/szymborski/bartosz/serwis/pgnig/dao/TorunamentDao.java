@@ -7,6 +7,7 @@ package szymborski.bartosz.serwis.pgnig.dao;
 
 import java.util.Date;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,14 @@ public class TorunamentDao {
         Tournament obj = session.load(Tournament.class, id);
         Hibernate.initialize(obj);
         return obj;
+    }
+    
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public String getTournamentName(String tournamentName) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("SELECT t.name FROM Tournament t WHERE t.name = :name");
+        query.setParameter("name", tournamentName);
+        return (String) query.uniqueResult();
     }
 
 }

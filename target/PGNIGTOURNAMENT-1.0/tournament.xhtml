@@ -20,9 +20,27 @@ and open the template in the editor.
             <p:selectOneMenu id="templateList" value="#{tournamentView.choosenTemplate}" style="width: 125px;" converter="#{templateListConverter}">
                 <f:selectItem itemLabel="#{mess.choose}" itemValue="" />
                 <f:selectItems value="#{templateListView.templates}" />
+                <f:ajax event="change" render="dataTable"/>
             </p:selectOneMenu><br/><br/>
-            <p:outputLabel value="#{mess.tournament_name} "/><p:inputText value="#{tournamentView.name}"/><br/><br/>
+            <p:outputLabel value="#{mess.tournament_name} "/>
+            <p:inputText id="tournamentName" value="#{tournamentView.name}">
+                <f:validator binding="#{tournamentNameValidator}"/>
+            </p:inputText><br/><br/>
+            <p:message for="tournamentName" showDetail="true">
+                <p:autoUpdate/>
+            </p:message>
+            <p:panel style="border: 0px" id="tournamentPanel" >
+                <p:dataTable id="dataTable" value="#{tournamentView.choosenTemplate.torunamentTemplateItemCollection}" var="templateItem"> <!-- value - encja, var- umożliwia poruszanie się po encjach, o ile są ze sobą powiązane  -->
+                    <p:column headerText="#{mess.parameters}">
+                        <h:outputText value="#{templateItem.idTournamentRule.name}"/>
+                    </p:column>
+                    <p:column headerText="#{mess.values}" style="text-align: center">
+                        <h:outputText value="#{templateItem.idTournamentRule.integralType ? templateItem.integerValue : templateItem.booleanValue }" /> <!-- warunek sprawdzającyh jaki rodzaj wartości wyświetlić na widoku -->
+                    </p:column>
+                </p:dataTable><br/><br/>
+            </p:panel>
             <p:commandButton value="#{mess.save}" action="#{tournamentView.saveTournament()}">
+                <p:ajax event="dialogReturn" listener="#{tournamentView.onDialogReturn}"/>
             </p:commandButton>
         </h:form>
 

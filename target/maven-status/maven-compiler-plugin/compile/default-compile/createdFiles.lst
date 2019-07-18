@@ -2,6 +2,7 @@ szymborski\bartosz\serwis\pgnig\service\TournamentService.class
 szymborski\bartosz\serwis\pgnig\view\TemplateListView.class
 szymborski\bartosz\serwis\pgnig\service\TourmentRuleServiceImpl.class
 szymborski\bartosz\serwis\pgnig\service\TournamentRuleSetServiceImpl.class
+szymborski\bartosz\serwis\pgnig\validator\TournamentNameValidator.class
 szymborski\bartosz\serwis\pgnig\dao\TournamentTemplateDao.class
 szymborski\bartosz\serwis\pgnig\service\TourmentRuleService.class
 szymborski\bartosz\serwis\pgnig\dao\TorunamentDao.class
@@ -12,11 +13,12 @@ szymborski\bartosz\serwis\pgnig\view\StartViewList.class
 szymborski\bartosz\serwis\pgnig\entity\TournamentRule.class
 szymborski\bartosz\serwis\pgnig\entity\Tournament.class
 szymborski\bartosz\serwis\pgnig\service\ContenderServiceImpl.class
+szymborski\bartosz\serwis\pgnig\service\TournamentContenderService.class
 szymborski\bartosz\serwis\pgnig\view\ViewScope.class
 szymborski\bartosz\serwis\pgnig\validator\TemplateNameValidator.class
 szymborski\bartosz\serwis\pgnig\view\TournamentTemplateView.class
 szymborski\bartosz\serwis\pgnig\entity\TournamentContender.class
-szymborski\bartosz\serwis\pgnig\view\TournamentViewDialog.class
+szymborski\bartosz\serwis\pgnig\service\TournamentContenderServiceImpl.class
 szymborski\bartosz\serwis\pgnig\service\TournamentRuleSetService.class
 szymborski\bartosz\serwis\pgnig\view\ContenderView.class
 szymborski\bartosz\serwis\pgnig\dao\TournamentTemplateItemDao.class
@@ -28,9 +30,9 @@ szymborski\bartosz\serwis\pgnig\entity\TournamentMatch.class
 szymborski\bartosz\serwis\pgnig\service\TournamentServiceImpl.class
 szymborski\bartosz\serwis\pgnig\view\TournamentView.class
 szymborski\bartosz\serwis\pgnig\dao\ContenderDao.class
-szymborski\bartosz\serwis\pgnig\view\TemplateView.class
 szymborski\bartosz\serwis\pgnig\entity\TournamentTemplate.class
 szymborski\bartosz\serwis\pgnig\entity\TorunamentTemplateItem.class
+szymborski\bartosz\serwis\pgnig\dao\TournamentContenderDao.class
 szymborski\bartosz\serwis\pgnig\entity\Contender.class
 szymborski\bartosz\serwis\pgnig\service\ContenderService.class
 szymborski\bartosz\serwis\pgnig\service\TournamentTemplateService.class

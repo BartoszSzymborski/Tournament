@@ -7,7 +7,6 @@ package szymborski.bartosz.serwis.pgnig.service;
 
 import java.util.List;
 import szymborski.bartosz.serwis.pgnig.entity.Contender;
-import szymborski.bartosz.serwis.pgnig.entity.TournamentRuleSet;
 
 /**
  *
