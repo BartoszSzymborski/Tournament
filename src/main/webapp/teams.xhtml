@@ -12,18 +12,29 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Drużyny turniejowe</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="css/basic.css"/>
     </h:head>
     <h:body>
         <h:form id="teamsForm">
             <h:outputFormat id="format" value="#{mess.how_many_teams_is_available}" style="float: right">
                 <f:param value="#{contenderView.teamsToChooseLeft}" />
             </h:outputFormat>
-            <p:outputLabel value="#{mess.choose_teams}" />
-            <p:selectManyCheckbox valueChangeListener="#{contenderView.teamClicked}" id="teamsList" value="#{contenderView.contendersChoosen}" style="width: 125px" converter="#{contenderConverter}" layout="grid" columns="3">
-                <f:selectItems value="#{contenderView.contenders}" var="it"  />
-                <f:ajax event="change"  render="format saveTeam @this"/>
-            </p:selectManyCheckbox><br/><br/>
+            <p:outputLabel value="#{mess.choose_teams}" /><br/><br/>
+            <p:pickList immediate="true" id="teamTable" var="teams" value="#{contenderView.dualContenders}" 
+                        itemValue="#{teams}" itemLabel="#{teams.name}" 
+                         showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" 
+                        converter="#{contenderConverter}" responsive="true" 
+                        valueChangeListener="#{contenderView.teamClicked}">
+                <f:ajax  event="transfer" render="format"/>
+                <f:facet name="sourceCaption">Lista drużyn dostępnych</f:facet>
+                <f:facet name="targetCaption">Wybrane drużyny</f:facet>
+                
+                <p:column style="text-align: center;" >
+                    <h:outputText value="#{teams.name}" />
+                </p:column>
+            </p:pickList>
+        </h:form>
+        <h:form>
             <p:panel style="border: 0px" id="saveTeam" visible="#{contenderView.showSaveButton}" >
                 <p:commandButton value="#{mess.save}" action="#{contenderView.saveTournamentContender()}" >
                 </p:commandButton>

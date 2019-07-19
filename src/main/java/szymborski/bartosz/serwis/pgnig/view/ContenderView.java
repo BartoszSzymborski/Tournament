@@ -5,12 +5,20 @@
  */
 package szymborski.bartosz.serwis.pgnig.view;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import org.primefaces.PrimeFaces;
 import org.primefaces.context.PrimeFacesContext;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.TransferEvent;
+import org.primefaces.event.UnselectEvent;
+import org.primefaces.model.DualListModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -18,6 +26,7 @@ import szymborski.bartosz.serwis.pgnig.dao.ContenderDao;
 import szymborski.bartosz.serwis.pgnig.entity.Contender;
 import szymborski.bartosz.serwis.pgnig.entity.Tournament;
 import szymborski.bartosz.serwis.pgnig.entity.TournamentContender;
+import szymborski.bartosz.serwis.pgnig.enums.TournamentRuleEnum;
 import szymborski.bartosz.serwis.pgnig.service.ContenderService;
 import szymborski.bartosz.serwis.pgnig.service.TournamentContenderService;
 import szymborski.bartosz.serwis.pgnig.service.TournamentRuleSetService;
@@ -33,7 +42,7 @@ import static szymborski.bartosz.serwis.pgnig.view.TournamentView.TOURNAMENT_ID;
 public class ContenderView {
 
     private List<Contender> contenders;
-    private List<Contender> contendersChoosen;
+    private List<Contender> contendersChoosen = new ArrayList<>();
     private Tournament tournament;
     private Long idTournament;
     private Long idContender;
@@ -43,6 +52,9 @@ public class ContenderView {
     private boolean showSaveButton;
     private List<TournamentContender> tournamentContenders;
     private Contender contender;
+    private String nameOfTeamLookUp;
+    private List<Contender> filterContenders;
+    private DualListModel<Contender> dualContenders;
 
     @Autowired
     private ContenderService contenderService;
@@ -62,7 +74,8 @@ public class ContenderView {
     @PostConstruct
     public void init() {
         contenders = contenderService.getContenders();
-
+        filterContenders = new ArrayList<>(contenders);
+        dualContenders = new DualListModel<>(filterContenders, contendersChoosen);
         String tournamentIdParam = PrimeFacesContext.getCurrentInstance()
                 .getExternalContext()
                 .getRequestParameterMap().get(TOURNAMENT_ID);
@@ -72,7 +85,9 @@ public class ContenderView {
 
         tournament = tsi.getTournamentId(Long.valueOf(tournamentIdParam));
         idTournament = tournament.getId();
-        teamsToChoose = teamsToChooseLeft = trss.getRuleValueForTournament(idTournament, "LICZBA_DRUZYN").getIntegerValue();
+        teamsToChoose = teamsToChooseLeft = trss.getRuleValueForTournament(idTournament, TournamentRuleEnum.LICZBA_DRUZYN).getIntegerValue();
+
+//        pfScript();
     }
 
     public void saveTournamentContender() {
@@ -82,7 +97,7 @@ public class ContenderView {
     }
 
     public void teamClicked(ValueChangeEvent vce) {
-        short chosenNo = (short) ((List) vce.getNewValue()).size();
+        short chosenNo = (short) ((DualListModel) vce.getNewValue()).getTarget().size();
         teamsToChooseLeft = (short) (teamsToChoose - chosenNo);
         showSaveButton = teamsToChooseLeft.intValue() == 0;
     }
@@ -91,6 +106,21 @@ public class ContenderView {
         PrimeFaces.current().dialog().closeDynamic(Boolean.TRUE);
     }
 
+//    public void applyFilter(AjaxBehaviorEvent event) throws AbortProcessingException {
+//        applyFilter();
+//    }
+//
+//    public void applyFilter() {
+//        if (getNameOfTeamLookUp() != null) {
+//            this.filterContenders = contenders.stream()
+//                    .filter(t -> t.getName().contains(getNameOfTeamLookUp())
+//                    || t.getName().contains(getNameOfTeamLookUp().toUpperCase()))
+//                    .collect(Collectors.toList());
+//        } else {
+//            filterContenders = new ArrayList<>(contenders);
+//        }
+//    } do filtrowania bez komponentu PickList
+    ////getter i setter
     public List<Contender> getContenders() {
         return contenders;
     }
@@ -147,9 +177,28 @@ public class ContenderView {
         this.showSaveButton = showSaveButton;
     }
 
-//    public boolean isItemDisabled(UIComponent uic){
-//        if(!showSaveButton) return false;
-//        UIInput uip = (UIInput) uic;
-//        return ! (Boolean) uip.getSubmittedValue();
-//    }
+    public List<Contender> getFilterContenders() {
+        return filterContenders;
+    }
+
+    public void setFilterContenders(List<Contender> filterContenders) {
+        this.filterContenders = filterContenders;
+    }
+
+    public String getNameOfTeamLookUp() {
+        return nameOfTeamLookUp;
+    }
+
+    public void setNameOfTeamLookUp(String nameOfTeamLookUp) {
+        this.nameOfTeamLookUp = nameOfTeamLookUp;
+    }
+
+    public DualListModel<Contender> getDualContenders() {
+        return dualContenders;
+    }
+
+    public void setDualContenders(DualListModel<Contender> dualContenders) {
+        this.dualContenders = dualContenders;
+    }
+
 }

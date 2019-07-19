@@ -23,7 +23,6 @@ and open the template in the editor.
                  <p:commandButton title="Lista stworzonych arkuszy" action="#{startViewList.openTemplateListDialog()}"> 
                 </p:commandButton><br/><br/>
                 <p:commandButton title="Tournament" action="#{startViewList.openTournamentDialog()}">
-                    <p:ajax event="dialogReturn" listener="#{startViewList.onDialogReturn}"/> <!-- na h:ajax to nie działa  -->
                 </p:commandButton>
             </p:column>
         </h:form>

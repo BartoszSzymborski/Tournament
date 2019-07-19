@@ -30,7 +30,7 @@ public class ContenderDao {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<Contender> getContendersList(){
         Session session = sessionFactory.getCurrentSession();
-        String queryPSQL = "SELECT c.name FROM Contender c";
+        String queryPSQL = "FROM Contender c";
         Query query = session.createQuery(queryPSQL);
         final List list = query.list();
         list.forEach(Hibernate::initialize);

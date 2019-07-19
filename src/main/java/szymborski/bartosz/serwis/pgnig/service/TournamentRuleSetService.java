@@ -6,6 +6,7 @@
 package szymborski.bartosz.serwis.pgnig.service;
 
 import szymborski.bartosz.serwis.pgnig.entity.TournamentRuleSet;
+import szymborski.bartosz.serwis.pgnig.enums.TournamentRuleEnum;
 
 /**
  *
@@ -13,5 +14,6 @@ import szymborski.bartosz.serwis.pgnig.entity.TournamentRuleSet;
  */
 public interface TournamentRuleSetService {
     
-     TournamentRuleSet getRuleValueForTournament(Long idTournament, String ruleName);
+
+    public TournamentRuleSet getRuleValueForTournament(Long idTournament, TournamentRuleEnum tournamentRuleEnum);
 }

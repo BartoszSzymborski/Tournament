@@ -1,3 +1,4 @@
+szymborski\bartosz\serwis\pgnig\enums\TournamentRuleEnum.class
 szymborski\bartosz\serwis\pgnig\service\TournamentService.class
 szymborski\bartosz\serwis\pgnig\view\TemplateListView.class
 szymborski\bartosz\serwis\pgnig\service\TourmentRuleServiceImpl.class
@@ -15,6 +16,7 @@ szymborski\bartosz\serwis\pgnig\entity\Tournament.class
 szymborski\bartosz\serwis\pgnig\service\ContenderServiceImpl.class
 szymborski\bartosz\serwis\pgnig\service\TournamentContenderService.class
 szymborski\bartosz\serwis\pgnig\view\ViewScope.class
+szymborski\bartosz\serwis\pgnig\view\ContenderView$1.class
 szymborski\bartosz\serwis\pgnig\validator\TemplateNameValidator.class
 szymborski\bartosz\serwis\pgnig\view\TournamentTemplateView.class
 szymborski\bartosz\serwis\pgnig\entity\TournamentContender.class

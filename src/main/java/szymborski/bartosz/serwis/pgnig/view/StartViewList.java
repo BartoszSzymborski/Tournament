@@ -8,7 +8,6 @@ package szymborski.bartosz.serwis.pgnig.view;
 import java.util.HashMap;
 import java.util.Map;
 import org.primefaces.PrimeFaces;
-import org.primefaces.event.SelectEvent;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -48,9 +47,5 @@ public class StartViewList {
         options.put("contentHeight", "550px");
         PrimeFaces.current().dialog().openDynamic("tournament", options, null);
     }
-
-    public void onDialogReturn(SelectEvent event) {
-        PrimeFaces.current().dialog().closeDynamic(event.getObject());
-    }
-
+     
 }

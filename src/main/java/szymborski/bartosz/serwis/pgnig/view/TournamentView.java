@@ -66,7 +66,7 @@ public class TournamentView {
         options.put("resizable", Boolean.FALSE);
         options.put("responsive", Boolean.TRUE);
         options.put("contentWidth", "900px");
-        options.put("contentHeight", "400px");
+        options.put("contentHeight", "900px");
 
         PrimeFaces.current().dialog().openDynamic("teams", options, params);
     }
