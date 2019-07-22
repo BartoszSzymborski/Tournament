@@ -12,7 +12,7 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Drużyny turniejowe</title>
-        <h:outputStylesheet library="css" name="css/basic.css"/>
+
     </h:head>
     <h:body>
         <h:form id="teamsForm">
@@ -20,21 +20,35 @@ and open the template in the editor.
                 <f:param value="#{contenderView.teamsToChooseLeft}" />
             </h:outputFormat>
             <p:outputLabel value="#{mess.choose_teams}" /><br/><br/>
-            <p:pickList immediate="true" id="teamTable" var="teams" value="#{contenderView.dualContenders}" 
-                        itemValue="#{teams}" itemLabel="#{teams.name}" 
-                         showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" 
-                        converter="#{contenderConverter}" responsive="true" 
-                        valueChangeListener="#{contenderView.teamClicked}">
-                <f:ajax  event="transfer" render="format"/>
-                <f:facet name="sourceCaption">Lista drużyn dostępnych</f:facet>
-                <f:facet name="targetCaption">Wybrane drużyny</f:facet>
-                
-                <p:column style="text-align: center;" >
+            <p:dataTable id="teamTable" var="teams" value="#{contenderView.getFilterContenders()}" rowIndexVar="index" paginator="true"  
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} 
+                         {LastPageLink} {RowsPerPageDropdown}" 
+                         rowsPerPageTemplate="10,25,50" rows="10">
+                <p:column style="width: 50px;">
+                    <f:facet name="header">
+                        <h:outputText value="Lp." />
+                    </f:facet>
+                    <h:outputText value="#{index + 1}" />
+                </p:column> 
+                <p:column style="text-align: center">
+                    <f:facet name="header">
+                        <p:outputLabel value="#{mess.teams}"/>
+                        <p:inputText id="teamNameFiltr" value="#{contenderView.nameOfTeamLookUp}">
+                            <f:ajax render="teams" execute="teamNameFiltr" event="change" listener="#{contenderView.applyFilter()}"/>
+                        </p:inputText>
+                    </f:facet>
                     <h:outputText value="#{teams.name}" />
                 </p:column>
-            </p:pickList>
+                <p:column headerText="Zaznacz uczestników" style="text-align: center">
+                    <p:selectBooleanCheckbox  id="teamsList" value="#{contenderView.contendersChoosen[teams]}" 
+                                             style="width: 125px" converter="#{contenderConverter}">
+                        <f:selectItems value="#{contenderView.contenders}"  />
+                        <f:ajax event="change" listener="#{contenderView.teamClicked}" render="teamsForm saveForm"/>
+                    </p:selectBooleanCheckbox><br/><br/>
+                </p:column>
+            </p:dataTable>
         </h:form>
-        <h:form>
+        <h:form id="saveForm">
             <p:panel style="border: 0px" id="saveTeam" visible="#{contenderView.showSaveButton}" >
                 <p:commandButton value="#{mess.save}" action="#{contenderView.saveTournamentContender()}" >
                 </p:commandButton>

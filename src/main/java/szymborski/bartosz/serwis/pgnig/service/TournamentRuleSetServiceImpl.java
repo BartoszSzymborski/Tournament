@@ -5,6 +5,7 @@
  */
 package szymborski.bartosz.serwis.pgnig.service;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -23,12 +24,14 @@ public class TournamentRuleSetServiceImpl implements  TournamentRuleSetService{
     
     @Autowired
     private ContenderDao contenderDao;
+    
 
     @Override
     public TournamentRuleSet getRuleValueForTournament(Long idTournament, TournamentRuleEnum  ruleName) {
        return contenderDao.getRuleValueForTournament(idTournament, ruleName.getMessKey().toUpperCase());
     }
 
+ 
     
     
 }

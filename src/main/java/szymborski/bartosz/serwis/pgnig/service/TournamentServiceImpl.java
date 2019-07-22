@@ -6,6 +6,8 @@
 package szymborski.bartosz.serwis.pgnig.service;
 
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -38,6 +40,9 @@ public class TournamentServiceImpl implements TournamentService{
     
     @Autowired
     TournamentTemplateDao templateDao;
+    
+    @Autowired
+    private TournamentEncounterService encoutnerService;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -46,6 +51,8 @@ public class TournamentServiceImpl implements TournamentService{
         Tournament tournament = td.saveTournament(name);
         Map<TournamentRule,Object>map = ttid.readItemValues(templateId);
         trsd.saveTournamentRules(map, tournament);
+        encoutnerService.saveTournamentEncounter(tournament, map.entrySet().stream()
+                .collect(Collectors.toMap(ent -> ent.getKey().getName(),Map.Entry::getValue)));
         return tournament;
     }
 

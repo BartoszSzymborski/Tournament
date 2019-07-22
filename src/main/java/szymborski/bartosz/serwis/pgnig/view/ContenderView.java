@@ -6,19 +6,15 @@
 package szymborski.bartosz.serwis.pgnig.view;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.PrimeFaces;
 import org.primefaces.context.PrimeFacesContext;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.TransferEvent;
-import org.primefaces.event.UnselectEvent;
-import org.primefaces.model.DualListModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -42,7 +38,7 @@ import static szymborski.bartosz.serwis.pgnig.view.TournamentView.TOURNAMENT_ID;
 public class ContenderView {
 
     private List<Contender> contenders;
-    private List<Contender> contendersChoosen = new ArrayList<>();
+    private Map<Contender, Boolean> contendersChoosen = new HashMap<>();
     private Tournament tournament;
     private Long idTournament;
     private Long idContender;
@@ -54,7 +50,6 @@ public class ContenderView {
     private Contender contender;
     private String nameOfTeamLookUp;
     private List<Contender> filterContenders;
-    private DualListModel<Contender> dualContenders;
 
     @Autowired
     private ContenderService contenderService;
@@ -73,9 +68,10 @@ public class ContenderView {
 
     @PostConstruct
     public void init() {
-        contenders = contenderService.getContenders();
-        filterContenders = new ArrayList<>(contenders);
-        dualContenders = new DualListModel<>(filterContenders, contendersChoosen);
+         contenders = contenderService.getContenders();
+         filterContenders = new ArrayList<>(contenders);
+         contenders.forEach(cont -> contendersChoosen.put(cont,false));
+
         String tournamentIdParam = PrimeFacesContext.getCurrentInstance()
                 .getExternalContext()
                 .getRequestParameterMap().get(TOURNAMENT_ID);
@@ -86,19 +82,16 @@ public class ContenderView {
         tournament = tsi.getTournamentId(Long.valueOf(tournamentIdParam));
         idTournament = tournament.getId();
         teamsToChoose = teamsToChooseLeft = trss.getRuleValueForTournament(idTournament, TournamentRuleEnum.LICZBA_DRUZYN).getIntegerValue();
-
-//        pfScript();
     }
 
     public void saveTournamentContender() {
-        tournamentContenders = tcs.saveTournamentContender(idTournament, contendersChoosen.stream()
-                .map(Contender::getId).collect(Collectors.toList()).toArray(new Long[0]));
+        tournamentContenders = tcs.saveTournamentContender(idTournament, contendersChoosen.entrySet().stream().filter(Map.Entry::getValue)
+                .map(ent -> ent.getKey().getId()).collect(Collectors.toList()).toArray(new Long[0]));
         closeDialog();
     }
 
-    public void teamClicked(ValueChangeEvent vce) {
-        short chosenNo = (short) ((DualListModel) vce.getNewValue()).getTarget().size();
-        teamsToChooseLeft = (short) (teamsToChoose - chosenNo);
+    public void teamClicked(AjaxBehaviorEvent vce) {
+        teamsToChooseLeft = (short) (teamsToChoose -  contendersChoosen.entrySet().stream().filter(Map.Entry::getValue).count());
         showSaveButton = teamsToChooseLeft.intValue() == 0;
     }
 
@@ -106,21 +99,20 @@ public class ContenderView {
         PrimeFaces.current().dialog().closeDynamic(Boolean.TRUE);
     }
 
-//    public void applyFilter(AjaxBehaviorEvent event) throws AbortProcessingException {
-//        applyFilter();
-//    }
-//
-//    public void applyFilter() {
-//        if (getNameOfTeamLookUp() != null) {
-//            this.filterContenders = contenders.stream()
-//                    .filter(t -> t.getName().contains(getNameOfTeamLookUp())
-//                    || t.getName().contains(getNameOfTeamLookUp().toUpperCase()))
-//                    .collect(Collectors.toList());
-//        } else {
-//            filterContenders = new ArrayList<>(contenders);
-//        }
-//    } do filtrowania bez komponentu PickList
-    ////getter i setter
+     public void applyFilter(AjaxBehaviorEvent event) throws AbortProcessingException{
+         applyFilter();
+     }
+     
+    public void applyFilter(){
+        if(getNameOfTeamLookUp() != null){
+            this.filterContenders = contenders.stream()
+                    .filter(t -> t.getName().contains(getNameOfTeamLookUp())
+                    || t.getName().contains(getNameOfTeamLookUp().toUpperCase()))
+                    .collect(Collectors.toList());
+        }else
+            filterContenders = new ArrayList<>(contenders);
+    } 
+     ////getter i setter
     public List<Contender> getContenders() {
         return contenders;
     }
@@ -129,11 +121,11 @@ public class ContenderView {
         this.contenders = contenders;
     }
 
-    public List<Contender> getContendersChoosen() {
+    public Map<Contender, Boolean> getContendersChoosen() {
         return contendersChoosen;
     }
 
-    public void setContendersChoosen(List<Contender> contendersChoosen) {
+    public void setContendersChoosen(Map<Contender, Boolean> contendersChoosen) {
         this.contendersChoosen = contendersChoosen;
     }
 
@@ -184,7 +176,7 @@ public class ContenderView {
     public void setFilterContenders(List<Contender> filterContenders) {
         this.filterContenders = filterContenders;
     }
-
+  
     public String getNameOfTeamLookUp() {
         return nameOfTeamLookUp;
     }
@@ -192,13 +184,4 @@ public class ContenderView {
     public void setNameOfTeamLookUp(String nameOfTeamLookUp) {
         this.nameOfTeamLookUp = nameOfTeamLookUp;
     }
-
-    public DualListModel<Contender> getDualContenders() {
-        return dualContenders;
-    }
-
-    public void setDualContenders(DualListModel<Contender> dualContenders) {
-        this.dualContenders = dualContenders;
-    }
-
 }

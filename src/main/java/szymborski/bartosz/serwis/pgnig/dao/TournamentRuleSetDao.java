@@ -5,7 +5,10 @@
  */
 package szymborski.bartosz.serwis.pgnig.dao;
 
+import java.util.List;
 import java.util.Map;
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +45,15 @@ public class TournamentRuleSetDao {
             session.persist(tournamentRuleSet);
         }
 
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public List<TournamentRuleSet> getTournamentRules() {
+        Session session = sessionFactory.getCurrentSession();
+        String psqlQuery = "FROM TournamentRuleSet";
+        Query query = session.createQuery(psqlQuery);
+        final List list = query.list();
+        list.forEach(Hibernate::initialize);
+        return list;
     }
 }

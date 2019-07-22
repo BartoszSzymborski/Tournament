@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -29,7 +31,8 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "TournamentEncounter.findAll", query = "SELECT t FROM TournamentEncounter t"),
     @NamedQuery(name = "TournamentEncounter.findById", query = "SELECT t FROM TournamentEncounter t WHERE t.id = :id"),
-    @NamedQuery(name = "TournamentEncounter.findByCzyFazaGrupowa", query = "SELECT t FROM TournamentEncounter t WHERE t.czyFazaGrupowa = :czyFazaGrupowa")})
+    @NamedQuery(name = "TournamentEncounter.findByCzyFazaGrupowa", query = "SELECT t FROM TournamentEncounter t WHERE t.czyFazaGrupowa = :czyFazaGrupowa"),
+    @NamedQuery(name = "TournamentEncounter.findByStage", query = "SELECT t FROM TournamentEncounter t WHERE t.stage = :stage")})
 public class TournamentEncounter implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,6 +45,16 @@ public class TournamentEncounter implements Serializable {
     @NotNull
     @Column(name = "\"czyFazaGrupowa\"")
     private boolean czyFazaGrupowa;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "stage")
+    private int stage;
+    @Basic(optional = false)
+    @Column(name = "\"addInfo\"")
+    private String addInfo;
+    @JoinColumn(name = "\"idTournament\"")
+    @ManyToOne(optional = false)
+    private Tournament idTournament;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTournamentEncounter")
     private Collection<TournamentEncounterContender> tournamentEncounterContenderCollection;
     @OneToMany(mappedBy = "idPreviousTournamentEncounter")
@@ -54,9 +67,11 @@ public class TournamentEncounter implements Serializable {
         this.id = id;
     }
 
-    public TournamentEncounter(Long id, boolean czyFazaGrupowa) {
+    public TournamentEncounter(Long id, boolean czyFazaGrupowa, int stage, String addInfo) {
         this.id = id;
         this.czyFazaGrupowa = czyFazaGrupowa;
+        this.stage = stage;
+        this.addInfo = addInfo;
     }
 
     public Long getId() {
@@ -75,20 +90,36 @@ public class TournamentEncounter implements Serializable {
         this.czyFazaGrupowa = czyFazaGrupowa;
     }
 
-    public Collection<TournamentEncounterContender> getTournamentEncounterContenderCollection() {
-        return tournamentEncounterContenderCollection;
+    public long getStage() {
+        return stage;
     }
 
-    public void setTournamentEncounterContenderCollection(Collection<TournamentEncounterContender> tournamentEncounterContenderCollection) {
-        this.tournamentEncounterContenderCollection = tournamentEncounterContenderCollection;
+    public void setStage(int stage) {
+        this.stage = stage;
     }
-
-    public Collection<TournamentEncounterContender> getTournamentEncounterContenderCollection1() {
+    
+     public Collection<TournamentEncounterContender> getTournamentEncounterContenderCollection1() {
         return tournamentEncounterContenderCollection1;
     }
 
     public void setTournamentEncounterContenderCollection1(Collection<TournamentEncounterContender> tournamentEncounterContenderCollection1) {
         this.tournamentEncounterContenderCollection1 = tournamentEncounterContenderCollection1;
+    }
+
+    public String getAddInfo() {
+        return addInfo;
+    }
+
+    public void setAddInfo(String addInfo) {
+        this.addInfo = addInfo;
+    }
+
+    public Tournament getIdTournament() {
+        return idTournament;
+    }
+
+    public void setIdTournament(Tournament idTournament) {
+        this.idTournament = idTournament;
     }
 
     @Override
@@ -115,5 +146,5 @@ public class TournamentEncounter implements Serializable {
     public String toString() {
         return "szymborski.bartosz.serwis.pgnig.entity.TournamentEncounter[ id=" + id + " ]";
     }
-    
+
 }

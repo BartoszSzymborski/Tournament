@@ -47,5 +47,15 @@ public class StartViewList {
         options.put("contentHeight", "550px");
         PrimeFaces.current().dialog().openDynamic("tournament", options, null);
     }
+    
+    public void openTournamentEncounterDialog() {
+        options.put("draggable", Boolean.FALSE);
+        options.put("resizable", Boolean.FALSE);
+        options.put("responsive", Boolean.TRUE);
+        options.put("contentWidth", "900px");
+        options.put("contentHeight", "550px");
+        PrimeFaces.current().dialog().openDynamic("tournamentEncounter", options, null);
+    }
+    
      
 }

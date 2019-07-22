@@ -16,4 +16,5 @@ public interface TournamentRuleSetService {
     
 
     public TournamentRuleSet getRuleValueForTournament(Long idTournament, TournamentRuleEnum tournamentRuleEnum);
+    
 }
