@@ -20,7 +20,11 @@ and open the template in the editor.
                 <p:column>
                     <h:outputText id="txt" value="#{tournamentTemplateView.currentRule.name}"/>
                 </p:column><br/><br/>
-                <p:inputNumber immediate="true" id="valinp" value="#{tournamentTemplateView.currentValue}" rendered="#{tournamentTemplateView.currentRule.integralType}" converter="javax.faces.Integer"/><br/>
+                <p:inputNumber immediate="true" id="valinp" value="#{tournamentTemplateView.currentValue}" rendered="#{tournamentTemplateView.currentRule.integralType}" converter="javax.faces.Integer"
+                               validator="tournamentTemplateRuleValidator">
+                    <f:attribute name="ruleId" value="#{tournamentTemplateView.currentRule.name}"/> 
+                    <f:attribute name="ruleMap" value="#{tournamentTemplateView.newValus}"/>
+                </p:inputNumber> <br/>
                 <p:selectBooleanCheckbox immediate="true" id="valinp2"  value="#{tournamentTemplateView.currentValue}"  rendered="#{not tournamentTemplateView.currentRule.integralType}" /><br/>
                 <p:message showDetail="true" for="#{tournamentTemplateView.getValidateFileId()}" style="font-size: 0.75em">
                     <p:autoUpdate/>

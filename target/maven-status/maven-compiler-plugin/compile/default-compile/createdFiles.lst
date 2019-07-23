@@ -41,4 +41,5 @@ szymborski\bartosz\serwis\pgnig\view\ContenderView.class
 szymborski\bartosz\serwis\pgnig\dao\TournamentRuleSetDao.class
 szymborski\bartosz\serwis\pgnig\service\TournamentServiceImpl.class
 szymborski\bartosz\serwis\pgnig\view\TournamentView.class
+szymborski\bartosz\serwis\pgnig\validator\TournamentTemplateRuleValidator.class
 szymborski\bartosz\serwis\pgnig\service\TournamentTemplateServiceImpl.class

@@ -60,6 +60,7 @@ public class TournamentTemplateView {
     @Autowired
     private TournamentTemplateItemDao ttid;
 
+    
     @PostConstruct
     public void init() {
 
@@ -97,8 +98,8 @@ public class TournamentTemplateView {
         if (validate) {
             return;
         }
+        newValus.put(currentRule.getName(), currentValue);
         if (ruleIterator.hasNext()) {
-            newValus.put(currentRule.getName(), currentValue);
             currentValue = null;
             currentRule = ruleIterator.next();
             if (!iteratorMove) {
@@ -222,4 +223,14 @@ public class TournamentTemplateView {
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
     }
+
+    public Map<String, Object> getNewValus() {
+        return newValus;
+    }
+
+    public void setNewValus(Map<String, Object> newValus) {
+        this.newValus = newValus;
+    }
+    
+    
 }

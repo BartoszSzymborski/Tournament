@@ -16,7 +16,7 @@ public enum TournamentRuleEnum{
     LICZBA_DRUZYN("liczba_druzyn"), 
     FAZA_GRUPOWA("faza_grupowa"),
     LICZBA_GRUP("liczba_grup"),
-    ILE_DRUZUN_AWANSUJE("ile_druzyn_awansuje"),
+    ILE_DRUZYN_AWANSUJE_Z_GRUPY("ile_druzyn_awansuje_z_grupy"),
     DRUGA_FAZA_TURNIEJU_GRUPOWA("druga_faza_turnieju_grupowa"),
     LICZBA_PUNKTOW_ZA_ZWYCIESTWO("liczba_punktow_za_zwyciestwo"),
     LICZBA_PUNKTOW_ZA_REMIS("liczba_punktow_za_remis"),
