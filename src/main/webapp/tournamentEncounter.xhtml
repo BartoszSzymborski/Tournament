@@ -10,13 +10,29 @@ and open the template in the editor.
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core"
-      >
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>TournamentEncounter</title>
     </h:head>
     <h:body>
-        <p:commandButton value="Losuj drużyny">
-        </p:commandButton>
-        <p:commandButton value="Wybierz drużyny ręcznie"></p:commandButton>
+        <h:form id="encounterForm">
+            <p:panel style="border: 0px">
+                <p:outputLabel value="#{mess.choose_your_tournament}"/>
+                <h:selectOneMenu id="tournamentList" value="#{tournamentEncounterView.tournament}" style="width: 125px;" 
+                                 requiredMessage="#{mess.select_tournament}" converter="omnifaces.SelectItemsConverter" required="true">
+                    <f:selectItem itemLabel="#{mess.choose}" noSelectionOption="true" />
+                    <f:selectItems value="#{tournamentEncounterView.tournaments}"/>
+                </h:selectOneMenu><br/><br/>
+                <p:message for="tournamentList" showDetail="true">
+                    <p:autoUpdate/>
+                </p:message>
+            </p:panel>
+            <p:panel style="border: 0px">
+                <p:commandButton value="Losuj drużyny" action="#{tournamentEncounterView.openRandomTeamsDialog()}">
+                </p:commandButton>
+                <p:commandButton value="Wybierz drużyny ręcznie" action="#{tournamentEncounterView.openRandomTeamsDialog()}">
+                </p:commandButton>
+            </p:panel>
+        </h:form>
     </h:body>
 </html>

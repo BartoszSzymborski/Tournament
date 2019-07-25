@@ -3,13 +3,13 @@
   <persistence-unit name="szymborski.bartosz_PGNIGTOURNAMENT_war_1.0PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>szymborski.bartosz.serwis.pgnig.entity.TournamentRule</class>
-    <class>szymborski.bartosz.serwis.pgnig.entity.Tournament</class>
     <class>szymborski.bartosz.serwis.pgnig.entity.TournamentRuleSet</class>
     <class>szymborski.bartosz.serwis.pgnig.entity.TournamentEncounterContender</class>
     <class>szymborski.bartosz.serwis.pgnig.entity.Contender</class>
     <class>szymborski.bartosz.serwis.pgnig.entity.TournamentMatch</class>
     <class>szymborski.bartosz.serwis.pgnig.entity.TournamentContender</class>
     <class>szymborski.bartosz.serwis.pgnig.entity.TournamentEncounter</class>
+    <class>szymborski.bartosz.serwis.pgnig.entity.Tournament</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/PGNIG-TOURNAMENT"/>

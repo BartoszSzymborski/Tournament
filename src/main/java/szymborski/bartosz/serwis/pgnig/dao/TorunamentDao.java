@@ -6,6 +6,7 @@
 package szymborski.bartosz.serwis.pgnig.dao;
 
 import java.util.Date;
+import java.util.List;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -53,6 +54,21 @@ public class TorunamentDao {
         Query query = session.createQuery("SELECT t.name FROM Tournament t WHERE t.name = :name");
         query.setParameter("name", tournamentName);
         return (String) query.uniqueResult();
+    }
+    
+     @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public List<Tournament> getTournamentList() {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("SELECT t.name FROM Tournament t");
+        final List list = query.list();
+        list.forEach(Hibernate::initialize);
+        return list;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Tournament getTournamentById(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.load(Tournament.class, id);
     }
 
 }

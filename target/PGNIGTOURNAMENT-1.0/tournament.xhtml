@@ -17,13 +17,17 @@ and open the template in the editor.
     <h:body>
         <h:form id="tournamentForm">
             <p:outputLabel value="#{mess.choose_your_template} "/>
-            <p:selectOneMenu id="templateList" value="#{tournamentView.choosenTemplate}" style="width: 125px;" converter="#{templateListConverter}">
-                <f:selectItem itemLabel="#{mess.choose}" itemValue="" />
-                <f:selectItems value="#{templateListView.templates}" />
+            <p:selectOneMenu id="templateList" value="#{tournamentView.choosenTemplate}" style="width: 125px;" 
+                             converter="#{templateListConverter}" requiredMessage="#{mess.select_template}" required="true">
+                <f:selectItem itemLabel="#{mess.choose}" itemValue="#{null}" noSelectionOption="true"/>
+                <f:selectItems value="#{templateListView.templates}"  />
                 <f:ajax event="change" render="dataTable"/>
             </p:selectOneMenu><br/><br/>
+             <p:message for="templateList" showDetail="true">
+                <p:autoUpdate/>
+            </p:message>
             <p:outputLabel value="#{mess.tournament_name} "/>
-            <p:inputText id="tournamentName" value="#{tournamentView.name}">
+            <p:inputText id="tournamentName" value="#{tournamentView.name}" requiredMessage="must be uniqe">
                 <f:validator binding="#{tournamentNameValidator}"/>
             </p:inputText><br/><br/>
             <p:message for="tournamentName" showDetail="true">
@@ -40,7 +44,7 @@ and open the template in the editor.
                 </p:dataTable><br/><br/>
             </p:panel>
             <p:commandButton value="#{mess.save}" action="#{tournamentView.saveTournament()}">
-                <p:ajax event="dialogReturn" listener="#{tournamentView.onDialogReturn}"/>
+                 <p:ajax event="dialogReturn" listener="#{tournamentView.onDialogReturn}"/>
             </p:commandButton>
         </h:form>
 

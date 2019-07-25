@@ -98,6 +98,16 @@ public class ContenderView {
     public void closeDialog() {
         PrimeFaces.current().dialog().closeDynamic(Boolean.TRUE);
     }
+    
+    public void openTournamentEncounterDialog() {
+        Map<String, Object> options = new HashMap<>();
+        options.put("draggable", Boolean.FALSE);
+        options.put("resizable", Boolean.FALSE);
+        options.put("responsive", Boolean.TRUE);
+        options.put("contentWidth", "900px");
+        options.put("contentHeight", "550px");
+        PrimeFaces.current().dialog().openDynamic("tournamentEncounter", options, null);
+    }
 
      public void applyFilter(AjaxBehaviorEvent event) throws AbortProcessingException{
          applyFilter();

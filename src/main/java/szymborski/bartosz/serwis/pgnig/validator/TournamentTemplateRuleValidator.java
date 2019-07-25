@@ -47,7 +47,6 @@ public class TournamentTemplateRuleValidator implements Validator {
                 prop = ResourceBundle.getBundle("messages").getString(NUMBER_OF_TEAMS_AFTER_PHASE);
                 throw new ValidatorException(new FacesMessage(prop));
             }
-
         }
         if (param.equals(TournamentRuleEnum.LICZBA_GRUP.name())) {
             short liczbaGrup = Short.valueOf(value.toString());

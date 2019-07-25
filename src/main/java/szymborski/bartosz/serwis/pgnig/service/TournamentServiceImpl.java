@@ -5,6 +5,8 @@
  */
 package szymborski.bartosz.serwis.pgnig.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -59,6 +61,12 @@ public class TournamentServiceImpl implements TournamentService{
     @Override
     public Tournament getTournamentId(Long valueOf) {
         return td.getTournamentId(valueOf);
+    }
+
+    @Override
+    public List<Tournament> getTournamentList() {
+        List<Tournament> tournaments = new ArrayList<>(td.getTournamentList());
+        return tournaments;
     }
     
 }

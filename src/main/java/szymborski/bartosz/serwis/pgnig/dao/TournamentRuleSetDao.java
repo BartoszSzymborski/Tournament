@@ -48,10 +48,11 @@ public class TournamentRuleSetDao {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public List<TournamentRuleSet> getTournamentRules() {
+    public List<TournamentRuleSet> getTournamentRules(Long idTournament) {
         Session session = sessionFactory.getCurrentSession();
-        String psqlQuery = "FROM TournamentRuleSet";
+        String psqlQuery = "SELECT trs FROM TournamentRuleSet WHERE trs.tournament.id = :idTournament";
         Query query = session.createQuery(psqlQuery);
+        query.setParameter("idTournament", idTournament);
         final List list = query.list();
         list.forEach(Hibernate::initialize);
         return list;

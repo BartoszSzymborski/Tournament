@@ -16,7 +16,7 @@ import szymborski.bartosz.serwis.pgnig.entity.TournamentRuleSet;
  */
 public interface TournamentEncounterService {
     
-    public List<TournamentRuleSet> getTournamentRules();
+    public List<TournamentRuleSet> getTournamentRules(Long tournamentId);
     
     public void saveTournamentEncounter(Tournament t, Map<String, Object> rules);
 }

@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +58,6 @@ public class TournamentView {
         nextDialog();
     }
 
-
     public void nextDialog() {
         Map<String, List<String>> params = new HashMap<>();
         params.put(TOURNAMENT_ID, Arrays.asList(tournament.getId().toString()));
@@ -70,7 +71,8 @@ public class TournamentView {
 
         PrimeFaces.current().dialog().openDynamic("teams", options, params);
     }
-     public void onDialogReturn(SelectEvent event) {
+
+    public void onDialogReturn(SelectEvent event) {
         PrimeFaces.current().dialog().closeDynamic(event.getObject());
     }
 
@@ -109,7 +111,5 @@ public class TournamentView {
     public void setIsShownDataTable(boolean isShownDataTable) {
         this.isShownDataTable = isShownDataTable;
     }
-    
-    
 
 }

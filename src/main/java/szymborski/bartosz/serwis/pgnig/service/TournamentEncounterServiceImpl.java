@@ -41,8 +41,9 @@ public class TournamentEncounterServiceImpl implements TournamentEncounterServic
     private TorunamentDao td;
 
     @Override
-    public List<TournamentRuleSet> getTournamentRules() {
-        return trsd.getTournamentRules();
+    public List<TournamentRuleSet> getTournamentRules(Long tournamentId) {
+         Tournament tournament = td.getTournamentId(tournamentId);
+        return trsd.getTournamentRules(tournamentId);
     }
 
     @Override
@@ -62,27 +63,28 @@ public class TournamentEncounterServiceImpl implements TournamentEncounterServic
                 gruopSymbol = (char) (gruopSymbol + 1);
 
             }
-            short ileDruzynAwansuje = (short) rules.get(TournamentRuleEnum.ILE_DRUZYN_AWANSUJE_Z_GRUPY.name());
-            int counter = (ileDruzynAwansuje * liczbaGrup) / 2;
-            int currStage = 1;
-            while (counter > 1) {
-                for (int i = 0; i < counter; i++) {
-                    createEncounter(encountersToSave, currStage, "1/" + counter, fazaGrupowa);
-                }
-                currStage++;
-                counter = counter / 2;
-            }
-            final Object trz = rules.get(TournamentRuleEnum.MECZ_O_TRZECIE_MIEJSCE.name());
-            Boolean meczOTrzecieMiejsce = trz != null &&  (Boolean) trz;
-            if (meczOTrzecieMiejsce) {
-                createEncounter(encountersToSave, currStage++, "Mecz o trzecie miejsce", fazaGrupowa);
-            }
-            createEncounter(encountersToSave, currStage, "Finał", fazaGrupowa);
-
             boolean drugaFazaTurniejuGrupowa = (boolean) rules.get(TournamentRuleEnum.DRUGA_FAZA_TURNIEJU_GRUPOWA.name());
             if (drugaFazaTurniejuGrupowa) {
-
+                createEncounter(encountersToSave, 1, "Grupa Mistrzowska", drugaFazaTurniejuGrupowa);
+            } else {
+                short ileDruzynAwansuje = (short) rules.get(TournamentRuleEnum.ILE_DRUZYN_AWANSUJE_Z_GRUPY.name());
+                int counter = (ileDruzynAwansuje * liczbaGrup) / 2;
+                int currStage = 1;
+                while (counter > 1) {
+                    for (int i = 0; i < counter; i++) {
+                        createEncounter(encountersToSave, currStage, "1/" + counter, fazaGrupowa);
+                    }
+                    currStage++;
+                    counter = counter / 2;
+                }
+                final Object trz = rules.get(TournamentRuleEnum.MECZ_O_TRZECIE_MIEJSCE.name());
+                Boolean meczOTrzecieMiejsce = trz != null && (Boolean) trz;
+                if (meczOTrzecieMiejsce) {
+                    createEncounter(encountersToSave, currStage++, "Mecz o trzecie miejsce", fazaGrupowa);
+                }
+                createEncounter(encountersToSave, currStage, "Finał", fazaGrupowa);
             }
+
         }
         encountersToSave.forEach(enc -> enc.setIdTournament(tournament));
         ted.saveTournamentEncounter(encountersToSave);

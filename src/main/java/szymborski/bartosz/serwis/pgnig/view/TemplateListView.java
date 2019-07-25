@@ -5,7 +5,6 @@
  */
 package szymborski.bartosz.serwis.pgnig.view;
 
-import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.primefaces.PrimeFaces;
