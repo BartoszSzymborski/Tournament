@@ -12,10 +12,28 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core"
       >
     <h:head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title><h:outputText value="Tuniej: #{randomTeamsView.tournamentName}" /></title>
     </h:head>
     <h:body>
-        <div>TODO write content</div>
+        <h:form id="randomForm">
+            <p:growl id="growl" />
+            <p:organigram id="organigram" widgetVar="organigram" value="#{randomTeamsView.rootNode}" var="node" 
+                          leafNodeConnectorHeight="#{randomTeamsView.leafNodeConnectorHeight}"
+                          autoScrollToSelection="#{randomTeamsView.autoScrollSelection}"
+                          zoom="#{randomTeamsView.zoom}"
+                          selection="#{randomTeamsView.selection}"
+                          style="#{randomTeamsView.style}" >
+                
+                <p:organigramNode type="final">
+                    <h:outputText value="#{node.data}"/>
+                </p:organigramNode>
+                 <p:organigramNode type="semif">
+                    <h:outputText value="#{node.data}"/>
+                </p:organigramNode>
+                <p:organigramNode type="nextStage">
+                    <h:outputText value="#{node.data}"/>
+                </p:organigramNode>
+            </p:organigram>
+        </h:form>
     </h:body>
 </html>

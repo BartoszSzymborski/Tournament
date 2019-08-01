@@ -18,7 +18,7 @@ and open the template in the editor.
         <h:form id="encounterForm">
             <p:panel style="border: 0px">
                 <p:outputLabel value="#{mess.choose_your_tournament}"/>
-                <h:selectOneMenu id="tournamentList" value="#{tournamentEncounterView.tournament}" style="width: 125px;" 
+                <h:selectOneMenu  id="tournamentList" value="#{tournamentEncounterView.tournament}" style="width: 125px;" 
                                  requiredMessage="#{mess.select_tournament}" converter="omnifaces.SelectItemsConverter" required="true">
                     <f:selectItem itemLabel="#{mess.choose}" noSelectionOption="true" />
                     <f:selectItems value="#{tournamentEncounterView.tournaments}"/>
@@ -30,7 +30,7 @@ and open the template in the editor.
             <p:panel style="border: 0px">
                 <p:commandButton value="Losuj drużyny" action="#{tournamentEncounterView.openRandomTeamsDialog()}">
                 </p:commandButton>
-                <p:commandButton value="Wybierz drużyny ręcznie" action="#{tournamentEncounterView.openRandomTeamsDialog()}">
+                <p:commandButton value="Wybierz drużyny ręcznie" action="#{tournamentEncounterView.openHandTeamsDialog()}">
                 </p:commandButton>
             </p:panel>
         </h:form>

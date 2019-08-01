@@ -10,6 +10,7 @@
     <class>szymborski.bartosz.serwis.pgnig.entity.TournamentContender</class>
     <class>szymborski.bartosz.serwis.pgnig.entity.TournamentEncounter</class>
     <class>szymborski.bartosz.serwis.pgnig.entity.Tournament</class>
+    <class>szymborski.bartosz.serwis.pgnig.entity.TournamentEncounterTree</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/PGNIG-TOURNAMENT"/>

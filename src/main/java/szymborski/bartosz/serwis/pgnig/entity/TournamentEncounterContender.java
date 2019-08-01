@@ -50,9 +50,6 @@ public class TournamentEncounterContender implements Serializable {
     @JoinColumn(name = "idTournamentEncounter", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private TournamentEncounter idTournamentEncounter;
-    @JoinColumn(name = "idPreviousTournamentEncounter", referencedColumnName = "id")
-    @ManyToOne
-    private TournamentEncounter idPreviousTournamentEncounter;
 
     public TournamentEncounterContender() {
     }
@@ -107,14 +104,6 @@ public class TournamentEncounterContender implements Serializable {
 
     public void setIdTournamentEncounter(TournamentEncounter idTournamentEncounter) {
         this.idTournamentEncounter = idTournamentEncounter;
-    }
-
-    public TournamentEncounter getIdPreviousTournamentEncounter() {
-        return idPreviousTournamentEncounter;
-    }
-
-    public void setIdPreviousTournamentEncounter(TournamentEncounter idPreviousTournamentEncounter) {
-        this.idPreviousTournamentEncounter = idPreviousTournamentEncounter;
     }
 
     @Override

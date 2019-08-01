@@ -49,11 +49,13 @@ public class TorunamentDao {
     }
     
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public String getTournamentName(String tournamentName) {
+    public Tournament getTournamentName(String tournamentName) {
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("SELECT t.name FROM Tournament t WHERE t.name = :name");
+        Query query = session.createQuery("FROM Tournament t WHERE t.name = :name");
         query.setParameter("name", tournamentName);
-        return (String) query.uniqueResult();
+        final Tournament retval = (Tournament) query.uniqueResult();
+        Hibernate.initialize(retval);
+        return retval;
     }
     
      @Transactional(propagation = Propagation.REQUIRES_NEW)

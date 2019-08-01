@@ -6,9 +6,7 @@
 package szymborski.bartosz.serwis.pgnig.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,9 +16,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -32,7 +30,8 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "TournamentEncounter.findAll", query = "SELECT t FROM TournamentEncounter t"),
     @NamedQuery(name = "TournamentEncounter.findById", query = "SELECT t FROM TournamentEncounter t WHERE t.id = :id"),
     @NamedQuery(name = "TournamentEncounter.findByCzyFazaGrupowa", query = "SELECT t FROM TournamentEncounter t WHERE t.czyFazaGrupowa = :czyFazaGrupowa"),
-    @NamedQuery(name = "TournamentEncounter.findByStage", query = "SELECT t FROM TournamentEncounter t WHERE t.stage = :stage")})
+    @NamedQuery(name = "TournamentEncounter.findByStage", query = "SELECT t FROM TournamentEncounter t WHERE t.stage = :stage"),
+    @NamedQuery(name = "TournamentEncounter.findByAddInfo", query = "SELECT t FROM TournamentEncounter t WHERE t.addInfo = :addInfo")})
 public class TournamentEncounter implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,17 +47,13 @@ public class TournamentEncounter implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "stage")
-    private int stage;
-    @Basic(optional = false)
+    private long stage;
+    @Size(max = 2147483647)
     @Column(name = "\"addInfo\"")
     private String addInfo;
-    @JoinColumn(name = "\"idTournament\"")
+    @JoinColumn(name = "\"idTournament\"", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Tournament idTournament;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTournamentEncounter")
-    private Collection<TournamentEncounterContender> tournamentEncounterContenderCollection;
-    @OneToMany(mappedBy = "idPreviousTournamentEncounter")
-    private Collection<TournamentEncounterContender> tournamentEncounterContenderCollection1;
 
     public TournamentEncounter() {
     }
@@ -67,11 +62,10 @@ public class TournamentEncounter implements Serializable {
         this.id = id;
     }
 
-    public TournamentEncounter(Long id, boolean czyFazaGrupowa, int stage, String addInfo) {
+    public TournamentEncounter(Long id, boolean czyFazaGrupowa, long stage) {
         this.id = id;
         this.czyFazaGrupowa = czyFazaGrupowa;
         this.stage = stage;
-        this.addInfo = addInfo;
     }
 
     public Long getId() {
@@ -94,16 +88,8 @@ public class TournamentEncounter implements Serializable {
         return stage;
     }
 
-    public void setStage(int stage) {
+    public void setStage(long stage) {
         this.stage = stage;
-    }
-    
-     public Collection<TournamentEncounterContender> getTournamentEncounterContenderCollection1() {
-        return tournamentEncounterContenderCollection1;
-    }
-
-    public void setTournamentEncounterContenderCollection1(Collection<TournamentEncounterContender> tournamentEncounterContenderCollection1) {
-        this.tournamentEncounterContenderCollection1 = tournamentEncounterContenderCollection1;
     }
 
     public String getAddInfo() {
@@ -121,6 +107,7 @@ public class TournamentEncounter implements Serializable {
     public void setIdTournament(Tournament idTournament) {
         this.idTournament = idTournament;
     }
+    
 
     @Override
     public int hashCode() {

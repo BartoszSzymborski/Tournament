@@ -6,8 +6,10 @@
 package szymborski.bartosz.serwis.pgnig.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -20,8 +22,10 @@ import szymborski.bartosz.serwis.pgnig.dao.TournamentEncouterDao;
 import szymborski.bartosz.serwis.pgnig.dao.TournamentRuleSetDao;
 import szymborski.bartosz.serwis.pgnig.entity.Tournament;
 import szymborski.bartosz.serwis.pgnig.entity.TournamentEncounter;
+import szymborski.bartosz.serwis.pgnig.entity.TournamentEncounterTree;
 import szymborski.bartosz.serwis.pgnig.entity.TournamentRuleSet;
 import szymborski.bartosz.serwis.pgnig.enums.TournamentRuleEnum;
+import szymborski.bartosz.serwis.pgnig.service.resolver.TournamentPhaseResolver;
 
 /**
  *
@@ -39,10 +43,13 @@ public class TournamentEncounterServiceImpl implements TournamentEncounterServic
 
     @Autowired
     private TorunamentDao td;
+    
+    @Autowired
+    private TournamentEncounterTreeService treeService;
 
     @Override
     public List<TournamentRuleSet> getTournamentRules(Long tournamentId) {
-         Tournament tournament = td.getTournamentId(tournamentId);
+        Tournament tournament = td.getTournamentId(tournamentId);
         return trsd.getTournamentRules(tournamentId);
     }
 
@@ -88,6 +95,40 @@ public class TournamentEncounterServiceImpl implements TournamentEncounterServic
         }
         encountersToSave.forEach(enc -> enc.setIdTournament(tournament));
         ted.saveTournamentEncounter(encountersToSave);
+
+        Map<Integer, List<TournamentEncounter>> encounterTreeMap = new HashMap<>();
+        for (TournamentEncounter te : encountersToSave) {
+            final int stage = (int) te.getStage();
+            List<TournamentEncounter> resultList = encounterTreeMap.get(stage);
+            if (resultList == null) {
+                encounterTreeMap.put(stage, new ArrayList<>());
+                resultList = encounterTreeMap.get(stage);
+            }
+            resultList.add(te);
+        }
+
+        Set<Integer> maxValueInteger = encounterTreeMap.keySet();
+        Integer lookingMaxValue = 0;
+
+        for (Integer value : maxValueInteger) { //szukanie najwyższego stega z TournamentEncounter
+            if (lookingMaxValue < value) {
+                lookingMaxValue = value;
+            }
+        }
+        List<TournamentEncounterTree> listTournamentEncTree = new ArrayList<>();
+        TournamentPhaseResolver.Param param = new TournamentPhaseResolver.Param(encounterTreeMap);
+        for (int i = lookingMaxValue; i >= 0; i--) {
+            List<TournamentEncounter> list = encounterTreeMap.get(i);
+            for (TournamentEncounter ec : list) {
+                final TournamentPhaseResolver reso = TournamentPhaseResolver.getTournamentPhaseResolver(lookingMaxValue, i, rules);
+                if (reso != null) {
+                    List<TournamentEncounterTree> resolved = reso.resolve(ec, param);
+                    listTournamentEncTree.addAll(resolved);
+                }
+            }
+        }
+        treeService.saveTournamentEncounterTree(listTournamentEncTree.toArray(new TournamentEncounterTree[0])); //przy zapisie w przypadku z vargs musi być skastowane do Array z indeksem 0
+
     }
 
     private void createEncounter(List<TournamentEncounter> encountersToSave, int stage, String info, boolean fazaGrupowa) {
@@ -98,4 +139,25 @@ public class TournamentEncounterServiceImpl implements TournamentEncounterServic
         encounter.setCzyFazaGrupowa(fazaGrupowa);
     }
 
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Map<Integer, List<TournamentEncounter>> getTournamentEncounter(Long idTournament) {
+        Map<Integer, List<TournamentEncounter>> returnMap = new HashMap<>();
+        List<TournamentEncounter> listTE = ted.getTournamentEncounter(idTournament);
+        for (TournamentEncounter te : listTE) {
+            final int stage = (int) te.getStage();
+            List<TournamentEncounter> resultList = returnMap.get(stage);
+            if (resultList == null) {
+                returnMap.put(stage, new ArrayList<>());
+                resultList = returnMap.get(stage);
+            }
+            resultList.add(te);
+        }
+        return returnMap;
+    }
+
+    @Override
+    public TournamentEncounter getTournamentEncounterMaxStageForTournament(Long idTournament) {
+      return ted.getTournamentEncounterMaxStageForTournament(idTournament);
+    }
 }
