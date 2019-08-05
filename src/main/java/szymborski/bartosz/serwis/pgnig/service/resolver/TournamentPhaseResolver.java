@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import szymborski.bartosz.serwis.pgnig.entity.TournamentEncounter;
 import szymborski.bartosz.serwis.pgnig.entity.TournamentEncounterTree;
 import szymborski.bartosz.serwis.pgnig.enums.TournamentRuleEnum;
@@ -19,7 +20,7 @@ import szymborski.bartosz.serwis.pgnig.enums.TournamentRuleEnum;
  */
 public interface TournamentPhaseResolver {
 
-    public static TournamentPhaseResolver getTournamentPhaseResolver(int startIndex, int currentIndex, Map<String, Object> rules) {
+    public static TournamentPhaseResolver getTournamentPhaseResolver(int startIndex, int currentIndex, Map<String, Object> rules, Param param) {
         if (currentIndex == 0) {
             return null;
         }
@@ -27,20 +28,20 @@ public interface TournamentPhaseResolver {
         Boolean isFazaGrupowaNext = (Boolean) rules.get(TournamentRuleEnum.DRUGA_FAZA_TURNIEJU_GRUPOWA.name());
         if (!isFazaGrupowaNext) {
             if (isMecz3 && startIndex == currentIndex) { //finał
-                return new ResolverImpl(currentIndex - 2);
-            } else if (isMecz3 && currentIndex == startIndex - 1) {
-                return new ResolverBrandNewImpl(currentIndex-1);
-            } else if(currentIndex == 1){
-                return new ResolverBrandNewImpl(currentIndex-1);
+                return new ResolverImpl(currentIndex - 2, param);
+            } else if (isMecz3 && currentIndex == startIndex - 1) {//trzecie miejsce
+                return new ResolverBrandNewImpl(currentIndex - 1, param);
+            } else if (param.countEncounters(currentIndex) == param.countEncounters(currentIndex - 1)) {
+                return new ResolverTreeChacheImpl(param, rules);
             } else {
-                return new ResolverImpl(currentIndex - 1); //tutaj mamy błąd
+                return new ResolverImpl(currentIndex - 1, param); //tutaj mamy błąd
             }
         } else {
             return new TournamentPhaseResolver() {
                 @Override
-                public List<TournamentEncounterTree> resolve(TournamentEncounter enc, Param p) {
+                public List<TournamentEncounterTree> resolve(TournamentEncounter enc) {
                     List<TournamentEncounterTree> ent = new ArrayList<>();
-                    for (TournamentEncounter en : p.getSubEncounters(0)) {
+                    for (TournamentEncounter en : param.getSubEncounters(0)) {
                         TournamentEncounterTree tet = new TournamentEncounterTree();
                         tet.setIdtournamentencounternext(enc);
                         tet.setIdtournamentencounterprevious(en);
@@ -54,12 +55,13 @@ public interface TournamentPhaseResolver {
         }
     }
 
-    List<TournamentEncounterTree> resolve(TournamentEncounter enc, Param p);
+    List<TournamentEncounterTree> resolve(TournamentEncounter enc);
 
     public static class Param { //klasa anonimowa
 
         private final Map<Integer, List<TournamentEncounter>> subEncounters = new HashMap<>();
         private final Map<Integer, List<TournamentEncounter>> encounterTreeMap;
+        private final Map<Integer, List<TournamentEncounterTree>> treeCache = new HashMap<>();
 
         public Param(Map<Integer, List<TournamentEncounter>> encounterTreeMap) {
             this.encounterTreeMap = encounterTreeMap;
@@ -78,5 +80,14 @@ public interface TournamentPhaseResolver {
             return new ArrayList<>(encounterTreeMap.get(stage));
         }
 
+        public int countEncounters(int stage) {
+            return (int) Optional.ofNullable(encounterTreeMap.get(stage)).orElse(new ArrayList<>()).stream().count();
+        }
+
+        public Map<Integer, List<TournamentEncounterTree>> getTreeCache() {
+            return treeCache;
+        }
+
     }
+
 }

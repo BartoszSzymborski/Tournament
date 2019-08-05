@@ -47,11 +47,11 @@ public class TournamentEncounterView {
 
     public void openRandomTeamsDialog() {
         Map<String, List<String>> params = introduceTournamentNameToDialog();
-        options.put("draggable", Boolean.FALSE);
-        options.put("resizable", Boolean.FALSE);
+        options.put("draggable", Boolean.TRUE);
+        options.put("resizable", Boolean.TRUE);
         options.put("responsive", Boolean.TRUE);
-        options.put("contentWidth", "900px");
-        options.put("contentHeight", "500px");
+        options.put("contentWidth", "1000px");
+        options.put("contentHeight", "700px");
         PrimeFaces.current().dialog().openDynamic("randomTeams", options, params);
     }
 

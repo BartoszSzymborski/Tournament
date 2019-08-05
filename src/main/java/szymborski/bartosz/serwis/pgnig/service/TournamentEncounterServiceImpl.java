@@ -120,9 +120,9 @@ public class TournamentEncounterServiceImpl implements TournamentEncounterServic
         for (int i = lookingMaxValue; i >= 0; i--) {
             List<TournamentEncounter> list = encounterTreeMap.get(i);
             for (TournamentEncounter ec : list) {
-                final TournamentPhaseResolver reso = TournamentPhaseResolver.getTournamentPhaseResolver(lookingMaxValue, i, rules);
+                final TournamentPhaseResolver reso = TournamentPhaseResolver.getTournamentPhaseResolver(lookingMaxValue, i, rules, param);
                 if (reso != null) {
-                    List<TournamentEncounterTree> resolved = reso.resolve(ec, param);
+                    List<TournamentEncounterTree> resolved = reso.resolve(ec);
                     listTournamentEncTree.addAll(resolved);
                 }
             }

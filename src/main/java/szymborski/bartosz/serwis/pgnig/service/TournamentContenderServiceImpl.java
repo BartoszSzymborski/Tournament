@@ -46,4 +46,10 @@ public class TournamentContenderServiceImpl implements TournamentContenderServic
         return conte.stream().map(c -> tcd.saveTournamentContender(c, tournament)).collect(Collectors.toList());
     }
 
+    @Override
+    public List<TournamentContender> getTournamentContenderById(Long idTournament) {
+       List<TournamentContender> contenders = tcd.getTournamentContendersById(idTournament);
+       return contenders;
+    }
+
 }

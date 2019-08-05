@@ -28,6 +28,7 @@ C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\se
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\view\TournamentView.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\service\resolver\TournamentPhaseResolver.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\service\TournamentEncounterServiceImpl.java
+C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\service\resolver\ResolverTreeChacheImpl.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\entity\TournamentEncounter.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\dao\ContenderDao.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\dao\TournamentTemplateItemDao.java

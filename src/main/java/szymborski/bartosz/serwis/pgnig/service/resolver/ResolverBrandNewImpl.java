@@ -14,8 +14,8 @@ import szymborski.bartosz.serwis.pgnig.entity.TournamentEncounter;
  */
 public class ResolverBrandNewImpl extends AbstractReslover{
 
-    public ResolverBrandNewImpl(int tournamentStage) {
-        super(tournamentStage);
+    public ResolverBrandNewImpl(int tournamentStage, Param p) {
+        super(tournamentStage, p);
     }
     
     @Override

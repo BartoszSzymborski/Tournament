@@ -18,17 +18,19 @@ import szymborski.bartosz.serwis.pgnig.entity.TournamentEncounterTree;
 public abstract class AbstractReslover implements TournamentPhaseResolver {
 
      final int tournamentStage;
+     protected final Param p;
 
-    public AbstractReslover(int tournamentStage) {
+    public AbstractReslover(int tournamentStage, Param p) {
         this.tournamentStage = tournamentStage;
+        this.p = p;
     }
      
     
     @Override
-    public List<TournamentEncounterTree> resolve(TournamentEncounter enc, Param p) {
+    public List<TournamentEncounterTree> resolve(TournamentEncounter enc) {
         List<TournamentEncounterTree> tetList = new ArrayList<>();
         ListIterator<TournamentEncounter> listIterator = getListIterator(p);
-        for (int y = 0; y < 2; y++) { // y większe niż 2
+        for (int y = 0; y < 2; y++) {
             TournamentEncounterTree tet = new TournamentEncounterTree();
             tet.setIdtournamentencounternext(enc);
             tet.setIdtournamentencounterprevious(listIterator.next());

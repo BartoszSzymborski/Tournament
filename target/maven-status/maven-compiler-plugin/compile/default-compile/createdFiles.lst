@@ -37,6 +37,7 @@ szymborski\bartosz\serwis\pgnig\service\resolver\AbstractReslover.class
 szymborski\bartosz\serwis\pgnig\service\TournamentTemplateService.class
 szymborski\bartosz\serwis\pgnig\service\resolver\TournamentPhaseResolver$1.class
 szymborski\bartosz\serwis\pgnig\service\TournamentService.class
+szymborski\bartosz\serwis\pgnig\service\resolver\ResolverTreeChacheImpl.class
 szymborski\bartosz\serwis\pgnig\service\TourmentRuleServiceImpl.class
 szymborski\bartosz\serwis\pgnig\service\TournamentRuleSetServiceImpl.class
 szymborski\bartosz\serwis\pgnig\validator\TournamentNameValidator.class
