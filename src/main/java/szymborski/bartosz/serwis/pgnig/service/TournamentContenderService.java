@@ -17,5 +17,5 @@ public interface TournamentContenderService {
    List<TournamentContender> saveTournamentContender(Long idTournament, Long... contender);
    
    List<TournamentContender> getTournamentContenderById(Long idTournament);
-    
+   
 }

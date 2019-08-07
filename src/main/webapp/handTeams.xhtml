@@ -11,9 +11,57 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title><h:outputText value="Tuniej: #{randomTeamsView.tournamentName}" /></title>
+        <title><h:outputText value="#{mess.tournament} #{randomTeamsView.tournamentName}" /></title>
     </h:head>
     <h:body>
-        <div>TODO write content</div>
+        <h:form id="randomForm" style="list-style: none">
+            <p:growl id="growl" />
+            <p:organigram id="organigram" widgetVar="organigram" value="#{randomTeamsView.rootNode}" var="node" 
+                          leafNodeConnectorHeight="#{randomTeamsView.leafNodeConnectorHeight}"
+                          autoScrollToSelection="#{randomTeamsView.autoScrollSelection}"
+                          zoom="#{randomTeamsView.zoom}"
+                          selection="#{randomTeamsView.selection}"
+                          style="#{randomTeamsView.style}" >
+                <p:organigramNode type="root">
+                    <h:outputText value="#{node.data}"/>
+                </p:organigramNode>
+            </p:organigram><br/><br/>
+            <br/>
+            <p:fieldset id="availableTeamsField" legend="Available Teams">
+                <p:dataTable id="availableTeams" var="teams" value="#{handTeamsView.contenders}">
+                    <p:column>
+                        <h:outputText id="test" value="#{teams.idContender.name}"/>
+                        <p:draggable for="test" revert="true" helper="clone" scope="dupa"/> 
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+
+
+            <p:outputPanel id="dropArea">
+                <h:outputText value="Drop here !!!" rendered="#{empty handTeamsView.droppedContenders}" style="font-size: 24px"/>
+
+                <p:dataGrid id="repeatForm" value="#{handTeamsView.lastDraw}" columns="#{randomTeamsView.numberOfGroups}" var="group"  
+                            paginator="false" rows="#{randomTeamsView.contenders.size()/randomTeamsView.numberOfGroups}" style="list-style: none"> 
+                    <f:facet name="header">
+                        #{mess.groupDivision}
+                    </f:facet>
+                    <p:dataList id="draggableGroup" var="team" value="#{handTeamsView.droppedContenders}" style="width: auto; text-align: center" type="definition" >
+                        <f:facet name="header">
+                            #{'Grupa '+= group.getKey()}
+                        </f:facet>
+                        <p:column>
+                            <h:outputText value="#{team.idContender.name}">
+                                <p:droppable tolerance="touch" activeStyleClass="ui-state-highlight" scope="dupa" datasource="availableTeams">
+                                    <p:ajax listener="#{handTeamsView.onTeamDrop}"  update="dropArea availableTeams"/>
+                                </p:droppable></h:outputText>
+
+                        </p:column><br/>
+
+                    </p:dataList>
+                </p:dataGrid><br/>
+            </p:outputPanel>
+
+
+        </h:form>
     </h:body>
 </html>

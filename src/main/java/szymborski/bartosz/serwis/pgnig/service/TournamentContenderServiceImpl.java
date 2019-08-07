@@ -51,5 +51,6 @@ public class TournamentContenderServiceImpl implements TournamentContenderServic
        List<TournamentContender> contenders = tcd.getTournamentContendersById(idTournament);
        return contenders;
     }
+    
 
 }

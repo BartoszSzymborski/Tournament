@@ -21,6 +21,7 @@ C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\se
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\view\ContenderView.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\dao\TournamentTemplateDao.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\entity\TournamentEncounterContender.java
+C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\validator\TournamentEncounterContenderValidator.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\service\TournamentContenderServiceImpl.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\enums\TournamentRuleEnum.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\service\TournamentTemplateService.java
@@ -35,6 +36,7 @@ C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\se
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\entity\TorunamentTemplateItem.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\service\resolver\ResolverBrandNewImpl.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\view\RandomTeamsView.java
+C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\service\TournamentEncounterContednerService.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\entity\Contender.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\service\resolver\ResolverImpl.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\service\ContenderService.java
@@ -42,6 +44,7 @@ C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\se
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\entity\TournamentMatch.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\service\TournamentServiceImpl.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\view\TournamentTemplateView.java
+C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\service\TournamentEncounterContenderServiceImpl.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\view\StartViewList.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\converter\TemplateListConverter.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\view\TournamentEncounterView.java
@@ -55,4 +58,5 @@ C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\se
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\dao\TournamentContenderDao.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\service\resolver\AbstractReslover.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\view\ViewScope.java
+C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\dao\TournamentEncounterContenderDao.java
 C:\Projekty\PGNIG_TOURNAMENT\PGNIGTOURNAMENT\src\main\java\szymborski\bartosz\serwis\pgnig\view\TemplateListView.java

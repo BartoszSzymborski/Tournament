@@ -6,26 +6,33 @@
 package szymborski.bartosz.serwis.pgnig.view;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
+import org.primefaces.PrimeFaces;
 import org.primefaces.context.PrimeFacesContext;
 import org.primefaces.model.DefaultOrganigramNode;
 import org.primefaces.model.OrganigramNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import szymborski.bartosz.serwis.pgnig.dao.TorunamentDao;
 import szymborski.bartosz.serwis.pgnig.entity.Tournament;
 import szymborski.bartosz.serwis.pgnig.entity.TournamentContender;
 import szymborski.bartosz.serwis.pgnig.entity.TournamentEncounter;
+import szymborski.bartosz.serwis.pgnig.entity.TournamentEncounterContender;
 import szymborski.bartosz.serwis.pgnig.entity.TournamentEncounterTree;
 import szymborski.bartosz.serwis.pgnig.entity.TournamentRuleSet;
 import szymborski.bartosz.serwis.pgnig.enums.TournamentRuleEnum;
 import szymborski.bartosz.serwis.pgnig.service.TournamentContenderService;
+import szymborski.bartosz.serwis.pgnig.service.TournamentEncounterContednerService;
 import szymborski.bartosz.serwis.pgnig.service.TournamentEncounterService;
 import szymborski.bartosz.serwis.pgnig.service.TournamentEncounterTreeService;
 import szymborski.bartosz.serwis.pgnig.service.TournamentRuleSetService;
@@ -57,6 +64,9 @@ public class RandomTeamsView {
     @Autowired
     private TournamentContenderService tcs;
 
+    @Autowired
+    private TournamentEncounterContednerService tecs;
+
     public static final String TOURNAMENT_NAME = "TOURNAMENT_NAME";
     private String tournamentName;
     private int leafNodeConnectorHeight = 0;
@@ -69,6 +79,9 @@ public class RandomTeamsView {
     private Tournament tournament;
     private List<TournamentContender> contenders;
     private Map<String, List<TournamentContender>> lastDraw;
+    private Set<TournamentEncounter> encounters = new HashSet<>();
+    private TournamentRuleSet ruleValueForTournament;
+    private short numberOfGroups;
 
     @PostConstruct
     public void init() {
@@ -77,21 +90,26 @@ public class RandomTeamsView {
         tournamentName = requestParameterMap.get(TOURNAMENT_NAME);
         tournament = td.getTournamentName(tournamentName);
         contenders = tcs.getTournamentContenderById(tournament.getId());
+        
+        ruleValueForTournament = trss.getRuleValueForTournament(tournament.getId(), TournamentRuleEnum.LICZBA_GRUP);
+        numberOfGroups = ruleValueForTournament.getIntegerValue();
 
         TournamentEncounter rootEnc = tes.getTournamentEncounterMaxStageForTournament(tournament.getId());
+        encounters.add(rootEnc);
         Map<TournamentEncounter, OrganigramNode> parentNodez = new HashMap<>();
 
         rootNode = new DefaultOrganigramNode("root", rootEnc.getAddInfo(), null);
         rootNode.setCollapsible(false);
         rootNode.setDraggable(true);
         rootNode.setSelectable(true);
+        selection = rootNode;
 
         parentNodez.put(rootEnc, rootNode);
 
         recurenctionMethodForEncounterTree(rootEnc, parentNodez);
+        Map<String, List<TournamentContender>> contenderByGroup = tecs.getContenderByGroup(tournament.getId());
+        lastDraw = contenderByGroup !=null ? contenderByGroup : createGroupOfContenders(contenders);
 
-        lastDraw = createGroupOfContenders(contenders);
-        selection = rootNode;
     }
 
     private void recurenctionMethodForEncounterTree(TournamentEncounter rootEnc, Map<TournamentEncounter, OrganigramNode> parentNodez) {
@@ -102,6 +120,7 @@ public class RandomTeamsView {
         for (TournamentEncounterTree tree : childNodez) {
             OrganigramNode onde = parentNodez.get(tree.getIdtournamentencounternext());
             TournamentEncounter idtournamentencounterprevious = tree.getIdtournamentencounterprevious();
+            encounters.add(idtournamentencounterprevious);
             OrganigramNode childNode = new DefaultOrganigramNode("root", createNameOfEncounter(idtournamentencounterprevious.getAddInfo()), onde);
             parentNodez.put(idtournamentencounterprevious, childNode);
             recurenctionMethodForEncounterTree(idtournamentencounterprevious, parentNodez);
@@ -126,10 +145,9 @@ public class RandomTeamsView {
     private Map<String, List<TournamentContender>> createGroupOfContenders(List<TournamentContender> contenders) {
         contenders = new ArrayList<>(contenders);//Defence Code - kopia defensywna
         Map<String, List<TournamentContender>> retVal = new HashMap<>(); //zwraca wartość
-        TournamentRuleSet ruleValueForTournament = trss.getRuleValueForTournament(tournament.getId(), TournamentRuleEnum.LICZBA_GRUP); //pobieranie idTurnieju i jego zasady LICBA GRUP
-        int howManyTeamsInGroup = contenders.size() / ruleValueForTournament.getIntegerValue(); //zmienna do określienie ile będzie druzyn w 1 grupie (rozmiar listy uczestników turnieju / LICZBA GRUP z zasady turnieju
+        int howManyTeamsInGroup = contenders.size() / numberOfGroups; //zmienna do określienie ile będzie druzyn w 1 grupie (rozmiar listy uczestników turnieju / LICZBA GRUP z zasady turnieju
         ThreadLocalRandom rand = ThreadLocalRandom.current(); //zmienna random do losowania przypadkowego, obiekt do pracy z wieloma wątkami
-        for (int i = 0; i < ruleValueForTournament.getIntegerValue(); i++) {//pierwsza pętla
+        for (int i = 0; i < numberOfGroups; i++) {//pierwsza pętla
             List<TournamentContender> newList = new ArrayList<>();//tworzenie listy aby ją dodać do mapy
             for (int y = 0; y < howManyTeamsInGroup; y++) {//druga iteracja
                 int r = rand.nextInt(0, contenders.size());//zmienna liczbowa do losowania
@@ -137,13 +155,27 @@ public class RandomTeamsView {
                 newList.add(draw);
                 contenders.remove(r);//czyszczenie listy z dodanego wczesniej contendera
             }
-            retVal.put(String.valueOf((char)('A'+i)), newList);//zwraca mapa //wazne plus jest przed castowaniem wiec musza byc dwa nawiasy zeby był efekt w postaci char
+            retVal.put(String.valueOf((char) ('A' + i)), newList);//zwraca mapa //wazne plus jest przed castowaniem wiec musza byc dwa nawiasy zeby był efekt w postaci char
         }
 
         return retVal;
     }
-    
-    public void showCreateGroupOfContenders(){
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void saveActualDraw() {
+        tecs.deleteTournamentEncounterContender(tournament.getId(), 0L);
+        tecs.saveTournamentEncounterContender(lastDraw.entrySet().stream()
+                .collect(Collectors.toMap(ent -> encounters.stream()
+                .filter(p -> p.getAddInfo().equals(ent.getKey())).findAny().get(),
+                         Map.Entry<String, List<TournamentContender>>::getValue))); //lambda pierwszy entry set z mapy lastDraw, strumień, filtrowanie wewnętrzna lamba p=TournamentEncounter(czyli mój set) i pobieram
+        closeDialog();//zamieniamy klucze ze stringa na tournamentEnconter - ogólny cel tej logiki
+    }
+
+    public void closeDialog() {
+        PrimeFaces.current().dialog().closeDynamic(Boolean.TRUE);
+    }
+
+    public void showCreateGroupOfContenders() {
         lastDraw = createGroupOfContenders(contenders);
     }
 
@@ -234,6 +266,24 @@ public class RandomTeamsView {
     public void setLastDraw(Map<String, List<TournamentContender>> lastDraw) {
         this.lastDraw = lastDraw;
     }
+
+    public TournamentRuleSet getRuleValueForTournament() {
+        return ruleValueForTournament;
+    }
+
+    public void setRuleValueForTournament(TournamentRuleSet ruleValueForTournament) {
+        this.ruleValueForTournament = ruleValueForTournament;
+    }
+
+    public short getNumberOfGroups() {
+        return numberOfGroups;
+    }
+
+    public void setNumberOfGroups(short numberOfGroups) {
+        this.numberOfGroups = numberOfGroups;
+    }
+
+    
     
     
 

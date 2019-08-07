@@ -51,7 +51,7 @@ public class TournamentEncounterView {
         options.put("resizable", Boolean.TRUE);
         options.put("responsive", Boolean.TRUE);
         options.put("contentWidth", "1000px");
-        options.put("contentHeight", "700px");
+        options.put("contentHeight", "900px");
         PrimeFaces.current().dialog().openDynamic("randomTeams", options, params);
     }
 
@@ -61,8 +61,8 @@ public class TournamentEncounterView {
         options.put("draggable", Boolean.FALSE);
         options.put("resizable", Boolean.FALSE);
         options.put("responsive", Boolean.TRUE);
-        options.put("contentWidth", "900px");
-        options.put("contentHeight", "500px");
+        options.put("contentWidth", "1000px");
+        options.put("contentHeight", "900px");
         PrimeFaces.current().dialog().openDynamic("handTeams", options, params);
     }
     

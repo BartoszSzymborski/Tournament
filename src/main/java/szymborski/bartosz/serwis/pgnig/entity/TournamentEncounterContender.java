@@ -44,10 +44,10 @@ public class TournamentEncounterContender implements Serializable {
     private Collection<TournamentMatch> tournamentMatchCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTournamentEncounterContenderONE")
     private Collection<TournamentMatch> tournamentMatchCollection2;
-    @JoinColumn(name = "idTournamentContender", referencedColumnName = "id")
+    @JoinColumn(name = "\"idTournamentContender\"", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private TournamentContender idTournamentContender;
-    @JoinColumn(name = "idTournamentEncounter", referencedColumnName = "id")
+    @JoinColumn(name = "\"idTournamentEncounter\"", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private TournamentEncounter idTournamentEncounter;
 

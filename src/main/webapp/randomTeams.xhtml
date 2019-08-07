@@ -12,10 +12,10 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core"
       >
     <h:head>
-        <title><h:outputText value="Turniej: #{randomTeamsView.tournamentName}" /></title>
+        <title><h:outputText value="#{mess.tournament} #{randomTeamsView.tournamentName}" /></title>
     </h:head>
     <h:body>
-        <h:form id="randomForm">
+        <h:form id="randomForm" style="list-style: none">
             <p:growl id="growl" />
             <p:organigram id="organigram" widgetVar="organigram" value="#{randomTeamsView.rootNode}" var="node" 
                           leafNodeConnectorHeight="#{randomTeamsView.leafNodeConnectorHeight}"
@@ -23,21 +23,29 @@ and open the template in the editor.
                           zoom="#{randomTeamsView.zoom}"
                           selection="#{randomTeamsView.selection}"
                           style="#{randomTeamsView.style}" >
-
                 <p:organigramNode type="root">
                     <h:outputText value="#{node.data}"/>
                 </p:organigramNode>
             </p:organigram><br/><br/>
             <br/>
-            <p:repeat id="repeatForm" value="#{randomTeamsView.lastDraw}" var="group"> 
-                <p:dataTable var="team" value="#{group.getValue()}" style="text-align: center">
-                    <p:column headerText="#{'Grupa ' += group.getKey()}">
-                        <h:outputText value="#{team.idContender.name}" />
-                    </p:column>
-                </p:dataTable>
-            </p:repeat><br/>
-            <p:commandButton value="Losuj drużyny jeszcze raz" action="#{randomTeamsView.showCreateGroupOfContenders}" 
+            <p:dataGrid id="repeatForm" value="#{randomTeamsView.lastDraw}" columns="#{randomTeamsView.numberOfGroups}" var="group"  
+                        paginator="false" rows="#{randomTeamsView.contenders.size()/randomTeamsView.numberOfGroups}" style="list-style: none"> 
+                <f:facet name="header">
+                    #{mess.groupDivision}
+                </f:facet>
+                <p:dataList var="team" value="#{group.getValue()}" style="width: auto; text-align: center" type="definition" >
+                    <f:facet name="header">
+                         #{'Grupa '+= group.getKey()}
+                    </f:facet>
+                    <p:column>
+                        <h:outputText value="#{team.idContender.name}"/>
+                    </p:column><br/>
+                </p:dataList>
+            </p:dataGrid><br/>
+            <p:commandButton value="#{mess.randomTeamAgain}" action="#{randomTeamsView.showCreateGroupOfContenders}" 
                              update="repeatForm" ajax="false">
+            </p:commandButton>
+            <p:commandButton value="#{mess.save}" action="#{randomTeamsView.saveActualDraw()}" style="azimuth: right; float: right">
             </p:commandButton>
         </h:form>
     </h:body>

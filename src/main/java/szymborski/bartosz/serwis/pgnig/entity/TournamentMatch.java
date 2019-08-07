@@ -41,13 +41,13 @@ public class TournamentMatch implements Serializable {
     private Short contenderOneScore;
     @Column(name = "\"contenderTwoScore\"")
     private Short contenderTwoScore;
-    @JoinColumn(name = "idTournamentEncounterContenderTwo", referencedColumnName = "id")
+    @JoinColumn(name = "\"idTournamentEncounterContenderTwo\"", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private TournamentEncounterContender idTournamentEncounterContenderTwo;
-    @JoinColumn(name = "idTournamentEncounterContenderWinner", referencedColumnName = "id")
+    @JoinColumn(name = "\"idTournamentEncounterContenderWinner\"", referencedColumnName = "id")
     @ManyToOne
     private TournamentEncounterContender idTournamentEncounterContenderWinner;
-    @JoinColumn(name = "idTournamentEncounterContenderONE", referencedColumnName = "id")
+    @JoinColumn(name = "\"idTournamentEncounterContenderONE\"", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private TournamentEncounterContender idTournamentEncounterContenderONE;
 

@@ -40,6 +40,7 @@ szymborski\bartosz\serwis\pgnig\service\TournamentService.class
 szymborski\bartosz\serwis\pgnig\service\resolver\ResolverTreeChacheImpl.class
 szymborski\bartosz\serwis\pgnig\service\TourmentRuleServiceImpl.class
 szymborski\bartosz\serwis\pgnig\service\TournamentRuleSetServiceImpl.class
+szymborski\bartosz\serwis\pgnig\service\TournamentEncounterContednerService.class
 szymborski\bartosz\serwis\pgnig\validator\TournamentNameValidator.class
 szymborski\bartosz\serwis\pgnig\dao\TournamentTemplateDao.class
 szymborski\bartosz\serwis\pgnig\service\resolver\ResolverBrandNewImpl.class
@@ -48,13 +49,16 @@ szymborski\bartosz\serwis\pgnig\view\TournamentEncounterView.class
 szymborski\bartosz\serwis\pgnig\entity\TournamentEncounter.class
 szymborski\bartosz\serwis\pgnig\service\ContenderServiceImpl.class
 szymborski\bartosz\serwis\pgnig\service\TournamentEncounterTreeService.class
+szymborski\bartosz\serwis\pgnig\dao\TournamentEncounterContenderDao.class
 szymborski\bartosz\serwis\pgnig\view\TournamentTemplateView.class
 szymborski\bartosz\serwis\pgnig\service\TournamentContenderServiceImpl.class
 szymborski\bartosz\serwis\pgnig\service\TournamentRuleSetService.class
 szymborski\bartosz\serwis\pgnig\view\ContenderView.class
+szymborski\bartosz\serwis\pgnig\service\TournamentEncounterContenderServiceImpl.class
 szymborski\bartosz\serwis\pgnig\view\RandomTeamsView.class
 szymborski\bartosz\serwis\pgnig\dao\TournamentRuleSetDao.class
 szymborski\bartosz\serwis\pgnig\service\TournamentServiceImpl.class
 szymborski\bartosz\serwis\pgnig\view\TournamentView.class
+szymborski\bartosz\serwis\pgnig\validator\TournamentEncounterContenderValidator.class
 szymborski\bartosz\serwis\pgnig\validator\TournamentTemplateRuleValidator.class
 szymborski\bartosz\serwis\pgnig\service\TournamentTemplateServiceImpl.class
